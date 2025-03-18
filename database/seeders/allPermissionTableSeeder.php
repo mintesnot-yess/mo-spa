@@ -18,21 +18,16 @@ class allPermissionTableSeeder extends Seeder
             $currentTimestamp = Carbon::now();
     
             $permissions = [
-                ['name' => 'order', 'guard_name' => 'web', 'created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp],
-                ['name' => 'payment_collection', 'guard_name' => 'web', 'created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp],
-                ['name' => 'commission', 'guard_name' => 'web', 'created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp],
-                ['name' => 'expense', 'guard_name' => 'web', 'created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp],
-                ['name' => 'expense_type', 'guard_name' => 'web', 'created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp],
-                ['name' => 'vehicles', 'guard_name' => 'web', 'created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp],
-                ['name' => 'drivers', 'guard_name' => 'web', 'created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp],
-                ['name' => 'location', 'guard_name' => 'web', 'created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp],
-                ['name' => 'load_type', 'guard_name' => 'web', 'created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp],
-                ['name' => 'bank', 'guard_name' => 'web', 'created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp],
+                ['name' => 'pending_transaction', 'guard_name' => 'web', 'created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp],
+                ['name' => 'complated_transaction', 'guard_name' => 'web', 'created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp],
+                ['name' => 'employee', 'guard_name' => 'web', 'created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp],
+                ['name' => 'customer', 'guard_name' => 'web', 'created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp],
+                ['name' => 'service', 'guard_name' => 'web', 'created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp],
+                ['name' => 'category', 'guard_name' => 'web', 'created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp],
+                ['name' => 'report', 'guard_name' => 'web', 'created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp],
                 ['name' => 'staff_user', 'guard_name' => 'web', 'created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp],
-                ['name' => 'client', 'guard_name' => 'web', 'created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp],
                 ['name' => 'role', 'guard_name' => 'web', 'created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp],
                 ['name' => 'give_permission', 'guard_name' => 'web', 'created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp],
-                ['name' => 'report', 'guard_name' => 'web', 'created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp],
             ];
     
             DB::table('general_permissions')->truncate();

@@ -81,21 +81,22 @@
                         </ul>
                     </li>
                 @endcan
-                @can('show_report')
+                @if (Auth::user()->can('show_employee') || Auth::user()->can('show_customer')|| Auth::user()->can('show_service')|| Auth::user()->can('show_category'))
                     <li class="pt-0 nav-item-header">
                         <div class="opacity-50 text-uppercase fs-sm lh-sm sidebar-resize-hide">
                             {{ 'Registration' }}</div>
                         <i class="ph-dots-three sidebar-resize-show"></i>
                     </li>
                     <li
-                        class="nav-item nav-item-submenu {{ Route::is('report*', 'report.client*', 'report.vehicle*', 'report.expenseType*', 'report.loadType*', 'report.location*', 'ownVsprivate*') ? 'nav-item-open' : '' }}">
+                        class="nav-item nav-item-submenu {{ Route::is('employee*', 'client*', 'service*', 'category*') ? 'nav-item-open' : '' }}">
                         {{-- nav-item nav-item-submenu  nav-item-open --}}
                         <a href="#" class="nav-link">
                             <i class="ph-scroll"></i>
                             <span>Registration</span>
                         </a>
                         <ul
-                            class="nav-group-sub {{ Route::is('report*', 'report.client*', 'report.vehicle*', 'report.expenseType*', 'report.loadType*', 'report.location*', 'ownVsprivate*') ? 'show' : 'collapse' }}">
+                            class="nav-group-sub {{ Route::is('employee*', 'client*', 'service*', 'category*') ? 'show' : 'collapse' }}">
+                            @can('show_employee')
                             <li class="nav-item">
                                 <a href="{{ route('report') }}"
                                     class="nav-link {{ Route::currentRouteNamed('report') || Route::currentRouteNamed('report.show') ? 'active' : '' }}">
@@ -105,15 +106,19 @@
                                     </span>
                                 </a>
                             </li>
+                            @endcan
+                            @can('show_customer')
                             <li class="nav-item">
-                                <a href="{{ route('ownVsprivate') }}"
-                                    class="nav-link {{ Route::currentRouteNamed('ownVsprivate') || Route::currentRouteNamed('ownVsprivate.show') ? 'active' : '' }}">
+                                <a href="{{ route('client') }}"
+                                    class="nav-link {{ Route::currentRouteNamed('client') || Route::currentRouteNamed('client.create') || Route::currentRouteNamed('client.edit') ? 'active' : '' }}">
                                     <i class="ph-handshake"></i>
                                     <span>
                                         {{ 'Customer' }}
                                     </span>
                                 </a>
                             </li>
+                            @endcan
+                            @can('show_service')
                             <li class="nav-item">
                                 <a href="{{ route('ownVsprivate') }}"
                                     class="nav-link {{ Route::currentRouteNamed('ownVsprivate') || Route::currentRouteNamed('ownVsprivate.show') ? 'active' : '' }}">
@@ -123,6 +128,8 @@
                                     </span>
                                 </a>
                             </li>
+                            @endcan
+                            @can('show_category')
                             <li class="nav-item">
                                 <a href="{{ route('ownVsprivate') }}"
                                     class="nav-link {{ Route::currentRouteNamed('ownVsprivate') || Route::currentRouteNamed('ownVsprivate.show') ? 'active' : '' }}">
@@ -132,9 +139,10 @@
                                     </span>
                                 </a>
                             </li>
+                            @endcan
                         </ul>
                     </li>
-                @endcan
+                @endif
                 @can('show_report')
                     <li class="pt-0 nav-item-header">
                         <div class="opacity-50 text-uppercase fs-sm lh-sm sidebar-resize-hide">
@@ -231,6 +239,9 @@
                 @endif
 
             </ul>
+            <br>
+            <br>
+            <br>
         </div>
         <!-- /main navigation -->
 

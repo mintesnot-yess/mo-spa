@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Client')
+@section('title', 'Customer')
 @push('css')
     <style>
         .add {
@@ -33,7 +33,7 @@
                             <div class="py-2 breadcrumb">
                                 <a href="{{ route('dashboard') }}" class="breadcrumb-item"><i class="ph-house"></i></a>
                                 {{-- <a href="#" class="breadcrumb-item">Home</a> --}}
-                                <span class="breadcrumb-item active">Client</span>
+                                <span class="breadcrumb-item active">Customer</span>
                             </div>
 
 
@@ -48,19 +48,25 @@
 
                     <!-- Basic datatable -->
                     <div class="card">
-                        @can('add_client')
+                        @can('add_customer')
                             <div class="add">
                                 <a href="{{ route('client.create') }}" class="btn btn-edit"><i class="ph-plus-circle"></i>
-                                    Add Client</a>
+                                    Add Customer</a>
                             </div>
                         @endcan
                         <table class="table datatable-basic">
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Code</th>
                                     <th>Name</th>
-                                    <th>Contact Persone</th>
                                     <th>Phone</th>
+                                    <th>Sex</th>
+                                    <th>Type</th>
+                                    <th>Staus</th>
+                                    <th>Created By</th>
+                                    <th>Assigned To</th>
+                                    <th>Remark</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -71,9 +77,15 @@
                                 @foreach ($clients as $client)
                                     <tr>
                                         <td>{{ $counter++ }}</td>
+                                        <td>{{ $client ? $client->code : '' }}</td>
                                         <td>{{ $client ? $client->name : '' }}</td>
-                                        <td>{{ $client ? $client->contact_person : '' }}</td>
                                         <td>{{ $client ? $client->phone : '' }}</td>
+                                        <td>{{ $client ? $client->sex : '' }}</td>
+                                        <td>{{ $client ? $client->category : '' }}</td>
+                                        <td>{{ $client ? $client->status : '' }}</td>
+                                        <td>{{ $client ? $client->created_by : '' }}</td>
+                                        <td>{{ $client ? $client->employee_id : '' }}</td>
+                                        <td>{{ $client ? $client->remark : '' }}</td>
                                         <td class="text-center">
                                             <div class="d-inline-flex">
                                                 <div class="dropdown">
@@ -82,13 +94,13 @@
                                                     </a>
 
                                                     <div class="dropdown-menu dropdown-menu-end">
-                                                        @can('edit_client')
+                                                        @can('edit_customer')
                                                             <a href="{{ route('client.edit', $client->id) }}"
                                                                 class="dropdown-item">
                                                                 <i class="ph-pencil-line me-2"></i>Edit
                                                             </a>
                                                         @endcan
-                                                        @can('delete_client')
+                                                        @can('delete_customer')
                                                             <form action="{{ route('client.delete', $client->id) }}"
                                                                 method="POST">
                                                                 @csrf

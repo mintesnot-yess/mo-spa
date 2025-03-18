@@ -89,7 +89,7 @@
                                         <td class="text-center">
                                             <div class="d-inline-flex">
                                                 <div class="dropdown">
-                                                    <a href="#" class="text-body  {{ $user->roles->first()->name === 'Admin' ? 'disabled' : '' }}" data-bs-toggle="dropdown">
+                                                    <a href="#" class="text-body  {{ $user->name === 'Admin' ? 'disabled' : '' }}" data-bs-toggle="dropdown">
                                                         <i class="ph-list"></i>
                                                     </a>
 
