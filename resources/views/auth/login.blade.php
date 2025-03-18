@@ -46,7 +46,7 @@
                             <div class="card-body">
                                 <div class="mb-3 text-center">
                                     <div class="mt-2 mb-4 d-inline-flex align-items-center justify-content-center">
-                                        <img src="{{asset('assets/images/logo_icon.png')}}" class="h-408px" alt="">
+                                        <img src="{{asset('assets/images/logo_icon.png')}}" style="width: 20%; hight: 30%" class="h-408px" alt="">
                                     </div>
                                     <h5 class="mb-0">Login to your account</h5>
                                     <span class="d-block text-muted">Enter your credentials below</span>

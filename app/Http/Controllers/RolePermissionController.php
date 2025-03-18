@@ -13,9 +13,9 @@ class RolePermissionController extends Controller
     public function __construct()
     {
         // $this->middleware('auth');
-        // $this->middleware('permission:show_role', ['only' => ['index','show']]);
-        // $this->middleware('permission:show_give_permission', ['only' => ['assignPermission']]);        
-        // $this->middleware('permission:edit_give_permission', ['only' => ['assignRolePermission']]);        
+        $this->middleware('permission:show_role', ['only' => ['index','show']]);
+        $this->middleware('permission:show_give_permission', ['only' => ['assignPermission']]);        
+        $this->middleware('permission:edit_give_permission', ['only' => ['assignRolePermission']]);        
     }
     public function index()
     {

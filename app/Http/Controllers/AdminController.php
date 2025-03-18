@@ -21,9 +21,9 @@ class AdminController extends Controller
         $vehicle = 432;
         $orders = 332;
 
-        $subscriberData = [323,245,265,4587,254,452,852,96];
+        $subscriberData = [323,245,265,4587,254,452,852,96,452,852,96,323];
 
-        $contactData = [123,225,465,587,254,552,352,396];
+        $contactData = [123,225,465,587,254,552,352,396,452,852,932,43];
 
         return view('Pages.dashboard', compact('subscriberData','contactData', 'orders', 'vehicle', 'user', 'employee'));
     }
