@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class ServiceController extends Controller
 {
     public function index(){
-        $services = Service::all();
+        $services = Service::orderBy('created_at', 'desc')->paginate(10);
         return view('Pages.services.index', compact('services'));
     }
     
@@ -22,14 +22,13 @@ class ServiceController extends Controller
         $request->validate([
             'code' =>'required|unique:services',
             'title' =>'required',
-            'category' =>'required',
             'price' =>'required',
             'type' =>'required',        
         ]);
         Service::create([
             'code' => $request->code,
             'title' => $request->title,
-            'category_id' => $request->category,
+            'category' => $request->category,
             'price' => $request->price,
             'type' => $request->type,
             'created_by' => auth()->user()->id,
@@ -53,7 +52,7 @@ class ServiceController extends Controller
         Service::find($id)->update([
             'code' => $request->code,
             'title' => $request->title,
-            'category_id' => $request->category,
+            'category' => $request->category,
             'price' => $request->price,
             'type' => $request->type,
             'updated_by' => auth()->user()->id,

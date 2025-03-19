@@ -110,7 +110,7 @@
                             @can('show_customer')
                             <li class="nav-item">
                                 <a href="{{ route('client') }}"
-                                    class="nav-link {{ Route::currentRouteNamed('client') || Route::currentRouteNamed('client.create') || Route::currentRouteNamed('client.edit') ? 'active' : '' }}">
+                                    class="nav-link {{ Route::is('client*') ? 'active' : '' }}">
                                     <i class="ph-handshake"></i>
                                     <span>
                                         {{ 'Customer' }}
@@ -120,8 +120,8 @@
                             @endcan
                             @can('show_service')
                             <li class="nav-item">
-                                <a href="{{ route('ownVsprivate') }}"
-                                    class="nav-link {{ Route::currentRouteNamed('ownVsprivate') || Route::currentRouteNamed('ownVsprivate.show') ? 'active' : '' }}">
+                                <a href="{{ route('service') }}"
+                                    class="nav-link {{ Route::is('service*') ? 'active' : '' }}">
                                     <i class="ph-stack"></i>
                                     <span>
                                         {{ 'Service' }}
