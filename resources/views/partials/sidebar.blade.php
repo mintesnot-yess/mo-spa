@@ -98,8 +98,8 @@
                             class="nav-group-sub {{ Route::is('employee*', 'client*', 'service*', 'category*') ? 'show' : 'collapse' }}">
                             @can('show_employee')
                             <li class="nav-item">
-                                <a href="{{ route('report') }}"
-                                    class="nav-link {{ Route::currentRouteNamed('report') || Route::currentRouteNamed('report.show') ? 'active' : '' }}">
+                                <a href="{{ route('employee') }}"
+                                    class="nav-link {{ Route::is('employee*') ? 'active' : '' }}">
                                     <i class="ph-users-three"></i>
                                     <span>
                                         {{ 'Employee' }}

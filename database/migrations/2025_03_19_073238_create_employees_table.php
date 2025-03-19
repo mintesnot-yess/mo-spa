@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->foreignId('service_id');
-            $table->string('code');
             $table->string('first_name');
-            $table->string('middle_name');
+            $table->string('middle_name')->nullable();
             $table->string('last_name');
             $table->string('email');
             $table->string('phone');
@@ -24,7 +23,6 @@ return new class extends Migration
             $table->date('dob');
             $table->date('join_date');
             $table->string('created_by');
-            $table->string('status')->default(1);
             $table->timestamps();
         });
     }

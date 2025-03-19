@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     use HasFactory;
+    protected $table = 'employees'; 
     protected $fillable = [
         'service_id',
         'code',
@@ -20,6 +21,5 @@ class Employee extends Model
         'dob',
         'join_date',
         'created_by',
-        'status',
     ];
 }
