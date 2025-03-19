@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
@@ -53,6 +54,14 @@ Route::middleware(['web'])->group(function () {
         Route::get('/service/edit/{id}', [ServiceController::class, 'edit'])->name('service.edit');
         Route::post('/service/update/{id}', [ServiceController::class, 'update'])->name('service.update');
         Route::delete('/service/delete/{id}', [ServiceController::class, 'destroy'])->name('service.delete');
+
+        // category 
+        Route::get('/category', [CategoryController::class, 'index'])->name('category');
+        Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
+        Route::post('/category/create/store', [CategoryController::class, 'store'])->name('category.store');
+        Route::get('/category/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+        Route::post('/category/update/{id}', [CategoryController::class, 'update'])->name('category.update');
+        Route::delete('/category/delete/{id}', [CategoryController::class, 'destroy'])->name('category.delete');
 
        
         //Setting

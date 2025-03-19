@@ -131,8 +131,8 @@
                             @endcan
                             @can('show_category')
                             <li class="nav-item">
-                                <a href="{{ route('ownVsprivate') }}"
-                                    class="nav-link {{ Route::currentRouteNamed('ownVsprivate') || Route::currentRouteNamed('ownVsprivate.show') ? 'active' : '' }}">
+                                <a href="{{ route('category') }}"
+                                    class="nav-link {{ Route::is('category*') ? 'active' : '' }}">
                                     <i class="ph-chart-bar-horizontal"></i>
                                     <span>
                                         {{ 'Category' }}
