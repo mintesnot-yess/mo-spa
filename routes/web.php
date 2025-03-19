@@ -6,7 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RolePermissionController;
-
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StafUserController;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +45,14 @@ Route::middleware(['web'])->group(function () {
         Route::get('/employee/edit/{id}', [EmployeeController::class, 'edit'])->name('employee.edit');
         Route::post('/employee/update/{id}', [EmployeeController::class, 'update'])->name('employee.update');
         Route::delete('/employee/delete/{id}', [EmployeeController::class, 'destroy'])->name('employee.delete');
+
+        // Service 
+        Route::get('/service', [ServiceController::class, 'index'])->name('service');
+        Route::get('/service/create', [ServiceController::class, 'create'])->name('service.create');
+        Route::post('/service/create/store', [ServiceController::class, 'store'])->name('service.store');
+        Route::get('/service/edit/{id}', [ServiceController::class, 'edit'])->name('service.edit');
+        Route::post('/service/update/{id}', [ServiceController::class, 'update'])->name('service.update');
+        Route::delete('/service/delete/{id}', [ServiceController::class, 'destroy'])->name('service.delete');
 
        
         //Setting

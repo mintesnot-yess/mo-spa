@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('price');
             $table->string('type');
             $table->string('created_by');
-            $table->string('updated_by');
+            $table->string('updated_by')->nullable();
             $table->string('status')->default(1);
             $table->timestamps();
         });
