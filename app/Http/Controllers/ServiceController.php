@@ -34,7 +34,7 @@ class ServiceController extends Controller
             'created_by' => auth()->user()->id,
             'status' => $request->status ?? 1,          
         ]);
-        return redirect()->route('services.index')->with('success', 'Service created successfully');
+        return redirect()->route('service')->with('success', 'Service created successfully');
     }
     public function edit($id){
         $service = Service::find($id);
@@ -58,10 +58,24 @@ class ServiceController extends Controller
             'updated_by' => auth()->user()->id,
             'status' => $request->status ?? 1,          
         ]);
-        return redirect()->route('services.index')->with('success', 'Service updated successfully');
+        return redirect()->route('service')->with('success', 'Service updated successfully');
     }
+    public function updateStatus(Request $request)
+{
+    $service = Service::find($request->id);
+
+    if (!$service) {
+        return response()->json(['success' => false, 'message' => 'Service not found'], 404);
+    }
+
+    $service->status = $request->status;
+    $service->save();
+
+    return response()->json(['success' => true, 'message' => 'Service status updated successfully!']);
+}
+
     public function destroy($id){
         Service::find($id)->delete();
-        return redirect()->route('services.index')->with('success', 'Service deleted successfully');
+        return redirect()->route('service')->with('success', 'Service deleted successfully');
     }
 }

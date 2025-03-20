@@ -19,19 +19,19 @@ class EmployeeController extends Controller
     }
     public function create()
     {
-        $services = Service::all();
+        $services = Service::where('status', 1)->get();
         return view('Pages.employee.create', compact('services'));
     }
     public function edit($id)
     {
         $employee = Employee::findOrFail($id);
-        $services = Service::all();
+        $services = Service::where('status', 1)->get();
         return view('Pages.employee.edit', compact('employee', 'services'));
     }
     public function store(Request $request)
     {
         $rules = [
-            // 'service_id' => 'required|integer|exists:services,id',
+            'service_id' => 'required|integer|exists:services,id',
             'first_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -44,8 +44,7 @@ class EmployeeController extends Controller
         $validatedData = $request->validate($rules);
         $employee = new Employee();
         $user = Auth::user()->id;
-        // $employee->service_id = $validatedData['service_id'];
-        $employee->service_id = 1;
+        $employee->service_id = $validatedData['service_id'];
         $employee->first_name = $validatedData['first_name'];
         $employee->middle_name = $validatedData['middle_name'] ?? null;
         $employee->last_name = $validatedData['last_name'];
@@ -65,7 +64,8 @@ class EmployeeController extends Controller
 
         // Validation rules
         $rules = [
-            // 'service_id' => 'required|integer|exists:services,id',
+            'service_id' => 'required|string|exists:services,id',
+            'service_id' => 'required|string',
             'first_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -82,8 +82,7 @@ class EmployeeController extends Controller
         $user = Auth::user()->id;
         // Update employee data
         $employee->update([
-            'service_id' => 1,
-            // 'service_id' => $validatedData['service_id'],
+            'service_id' => $validatedData['service_id'],
             'first_name' => $validatedData['first_name'],
             'middle_name' => $validatedData['middle_name'] ?? null,
             'last_name' => $validatedData['last_name'],
@@ -112,8 +111,9 @@ class EmployeeController extends Controller
     }
     public function client_index()
     {
+        $employees = Employee::all();
         $clients = Client::orderBy('created_at', 'desc')->paginate(10);
-        return view('Pages.client.index', compact('clients'));
+        return view('Pages.client.index', compact('clients', 'employees'));
     }
     public function client_create()
     {
@@ -130,9 +130,9 @@ class EmployeeController extends Controller
     {
         $rules = [
             'employee_id' => 'required|integer|exists:employees,id',
-            'code' => 'required|string|max:50|unique:employees,code',
+            'code' => 'required|string|max:50|unique:clients,code',
             'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:20|unique:employees,phone',
+            'phone' => 'required|string|max:20|unique:clients,phone',
             'sex' => 'required|in:Male,Female,Other',
             'category' => 'required|string',
             'remark' => 'required|string',
@@ -141,7 +141,6 @@ class EmployeeController extends Controller
         $validatedData = $request->validate($rules);
         $client = new Client();
         $user = Auth::user()->id;
-        $client->employee_id = 1;
         $client->employee_id = $validatedData['employee_id'];
         $client->code = $validatedData['code'];
         $client->name = $validatedData['name'];
@@ -187,6 +186,20 @@ class EmployeeController extends Controller
         ]);
 
         return redirect()->route('client')->with('success', 'Customer updated successfully.');
+    }
+    public function updateStatus(Request $request)
+    {
+        $client = Client::find($request->id);
+
+        if (!$client) {
+            return redirect()->back()->with('error', 'Customer not found');
+        }
+
+        $client->status = $request->status;
+        $client->employee_id = $request->employee_id;
+        $client->save();
+
+        return redirect()->back()->with('success', 'Customer status updated successfully!');
     }
     public function client_destroy($id)
     {

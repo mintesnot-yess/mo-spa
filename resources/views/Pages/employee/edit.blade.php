@@ -133,7 +133,7 @@
                                                 @foreach ($services as $service)
                                                     <option value="{{ $service->id }}"
                                                         @if (old('service_id',$employee->service_id) == $service->id) selected @endif>
-                                                        {{ $service->name }}</option>
+                                                        {{ $service->title }}</option>
                                                 @endforeach
                                             </select>
                                             @error('service_id')

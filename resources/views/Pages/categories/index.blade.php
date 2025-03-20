@@ -74,8 +74,8 @@
                                         <td>{{ $counter++ }}</td>
                                         <td>{{ $category ? $category->title : '' }}</td>
                                         <td>{{ $category ? $category->type : '' }}</td>
-                                        <td>{{ $category ? $category->parent_category_id : '-' }}</td>
-                                        <td>{{ $category ? $category->created_by : '' }}</td>
+                                        <td>{{ $category->parent_category_id ? $category->parent->title : '-' }}</td>
+                                        <td>{{ $category->user ? $category->user->name : '' }}</td>
                                         <td class="text-center">
                                             <div class="d-inline-flex">
                                                 <div class="dropdown">

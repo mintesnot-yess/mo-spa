@@ -78,12 +78,18 @@
                                         <td>{{ $counter++ }}</td>
                                         <td>{{ $service ? $service->title : '' }}</td>
                                         <td>{{ $service ? $service->code : '' }}</td>
-                                        <td>{{ $service ? $service->category : '' }}</td>
+                                        <td>{{ $service->categories ? $service->categories->title : '' }}</td>
                                         <td>{{ $service ? $service->price : '' }}</td>
                                         <td>{{ $service ? $service->type : '' }}</td>
-                                        <td>{{ $service ? $service->status : '' }}</td>
-                                        <td>{{ $service ? $service->created_by : '' }}</td>
-                                        <td>{{ $service ? $service->update_by : '' }}</td>
+                                        <td>
+                                            <label class="form-check form-switch form-check-reverse">
+                                                <input type="checkbox" class="form-check-input service-status-toggle"
+                                                    data-id="{{ $service->id }}"
+                                                    {{ $service->status == 1 ? 'checked' : '' }}>
+                                            </label>
+                                        </td>
+                                        <td>{{ $service->user ? $service->user->name : '' }}</td>
+                                        <td>{{ $service->updatesUser ? $service->updatedUser->name : '-' }}</td>
                                         <td class="text-center">
                                             <div class="d-inline-flex">
                                                 <div class="dropdown">
@@ -144,5 +150,33 @@
                     <script src="{{ asset('assets/js/vendor/notifications/noty.min.js') }}"></script>
                     <script src="{{ asset('assets/demo/pages/extra_noty.js') }}"></script>
                     <!-- /theme JS files -->
+                    <script>
+                        $(document).ready(function() {
+                            $('.service-status-toggle').change(function() {
+                                let serviceId = $(this).data('id');
+                                let newStatus = $(this).is(':checked') ? 1 : 0;
+                    
+                                $.ajax({
+                                    url: "{{ route('service.updateStatus') }}",
+                                    type: "POST",
+                                    data: {
+                                        _token: "{{ csrf_token() }}",
+                                        id: serviceId,
+                                        status: newStatus
+                                    },
+                                    success: function(response) {
+                                        if (response.success) {
+                                            alert('Service status updated successfully!');
+                                        } else {
+                                            alert('Failed to update service status.');
+                                        }
+                                    },
+                                    error: function() {
+                                        alert('Something went wrong!');
+                                    }
+                                });
+                            });
+                        });
+                    </script>
                 @endpush
             @endsection

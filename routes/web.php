@@ -38,6 +38,7 @@ Route::middleware(['web'])->group(function () {
         Route::get('/client/edit/{id}', [EmployeeController::class, 'client_edit'])->name('client.edit');
         Route::post('/client/update/{id}', [EmployeeController::class, 'client_update'])->name('client.update');
         Route::delete('/client/delete/{id}', [EmployeeController::class, 'client_destroy'])->name('client.delete');
+        Route::post('/client/update-status', [EmployeeController::class, 'updateStatus'])->name('client.updateStatus');
 
         // employee 
         Route::get('/employee', [EmployeeController::class, 'index'])->name('employee');
@@ -54,6 +55,7 @@ Route::middleware(['web'])->group(function () {
         Route::get('/service/edit/{id}', [ServiceController::class, 'edit'])->name('service.edit');
         Route::post('/service/update/{id}', [ServiceController::class, 'update'])->name('service.update');
         Route::delete('/service/delete/{id}', [ServiceController::class, 'destroy'])->name('service.delete');
+        Route::post('/service/update-status', [ServiceController::class, 'updateStatus'])->name('service.updateStatus');
 
         // category 
         Route::get('/category', [CategoryController::class, 'index'])->name('category');

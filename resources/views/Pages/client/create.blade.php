@@ -123,14 +123,14 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label class="form-label"> Assign Employee: <span style="color: red">*</span> :</label>
-                                            <select name="sex" class="form-control select">
+                                            <select name="employee_id" class="form-control select">
                                                 <option value="" disabled selected>Select employee</option>
                                                 @foreach ($employees as $employee)
-                                                <option value="{{$employee->id}}" @if (old('sex') == $employee->id) selected @endif>
-                                                    {{$employee->name}}</option>
+                                                <option value="{{$employee->id}}" @if (old('employee_id') == $employee->id) selected @endif>
+                                                    {{$employee->first_name}} {{$employee->first_name ?? $employee->last_name}}</option>
                                                     @endforeach
                                             </select>
-                                            @error('sex')
+                                            @error('employee_id')
                                                 <div class="text-danger">
                                                     {{ $message }}</div>
                                             @enderror

@@ -76,14 +76,14 @@
                                 @foreach ($employees as $employee)
                                     <tr>
                                         <td>{{ $counter++ }}</td>
-                                        <td>{{ $employee ? $employee->service_id : '' }}</td>
+                                        <td>{{ $employee->service ? $employee->service->title : '' }}</td>
                                         <td>{{ $employee ? $employee->first_name : '' }} {{ $employee ? $employee->middle_name : '' }} {{ $employee ? $employee->last_name : '' }}</td>
                                         <td>{{ $employee ? $employee->phone : '' }}</td>
                                         <td>{{ $employee ? $employee->email : '' }}</td>
                                         <td>{{ $employee ? $employee->sex : '' }}</td>
                                         <td>{{ $employee ? $employee->dob : '' }}</td>
                                         <td>{{ $employee ? $employee->join_date : '' }}</td>
-                                        <td>{{ $employee ? $employee->created_by : '' }}</td>
+                                        <td>{{ $employee->user ? $employee->user->name : '' }}</td>
                                         <td class="text-center">
                                             <div class="d-inline-flex">
                                                 <div class="dropdown">

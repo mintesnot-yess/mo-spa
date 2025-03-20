@@ -82,10 +82,26 @@
                                         <td>{{ $client ? $client->phone : '' }}</td>
                                         <td>{{ $client ? $client->sex : '' }}</td>
                                         <td>{{ $client ? $client->category : '' }}</td>
-                                        <td>{{ $client ? $client->status : '' }}</td>
-                                        <td>{{ $client ? $client->created_by : '' }}</td>
-                                        <td>{{ $client ? $client->employee_id : '' }}</td>
-                                        <td>{{ $client ? $client->remark : '' }}</td>
+                                        <td>
+                                            <a href="#"
+                                                class="navbar-nav-link navbar-nav-link-icon rounded-pill client-status-btn"
+                                                data-bs-toggle="offcanvas" data-bs-target="#notifications"
+                                                data-id="{{ $client->id }}" data-status="{{ $client->status }}"
+                                                data-employee="{{ $client->employee_id }}">
+                                                <span
+                                                    class="badge {{ $client->status == 1 ? 'bg-success' : 'bg-danger' }}">
+                                                    {{ $client->status == 1 ? 'Active' : 'Inactive' }}
+                                                </span>
+                                            </a>
+                                        </td>
+
+
+                                        <td>{{ $client->user ? $client->user->name : '' }}</td>
+                                        <td>
+                                            {{ $client->employee ? $client->employee->first_name . ' ' . ($client->employee->middle_name ?? $client->employee->last_name) : '' }}
+                                        </td>
+                                        <td>{{ $client ? Illuminate\Support\Str::limit($client->remark, 20, '...') : '' }}
+                                        </td>
                                         <td class="text-center">
                                             <div class="d-inline-flex">
                                                 <div class="dropdown">
@@ -133,18 +149,76 @@
                     <!-- /basic datatable -->
 
                 </div>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="notifications">
+                    <div class="py-0 offcanvas-header">
+                        <h5 class="py-3 offcanvas-title">Customer Status</h5>
+                        <button type="button" class="border-transparent btn btn-light btn-sm btn-icon rounded-pill"
+                            data-bs-dismiss="offcanvas">
+                            <i class="ph-x"></i>
+                        </button>
 
-                <!-- /page content -->
-                @push('js')
-                    <!-- Theme JS files -->
-                    <script src="{{ asset('assets/js/jquery/jquery.min.js') }}"></script>
-                    <script src="{{ asset('assets/js/vendor/tables/datatables/datatables.min.js') }}"></script>
+                    </div>
+                    <form action="{{route('client.updateStatus')}}" method="POST">
+                        @csrf
+                        <div class="p-0 offcanvas-body">
+                            <div class="p-3">
+                                <div class="mb-3 d-flex align-items-start">
+                                    <div class="col-md-12">
+                                        <input type="hidden" id="id-select" name="id" value="">
+                                        <label class="form-label"> Status <span style="color: red">*</span> :</label>
+                                        <select name="status" id="status-select" class="form-control select">
+                                            <option value="" disabled selected>Select status</option>
+                                            <option value="1">Active</option>
+                                            <option value="0">Inactive</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-3 d-flex align-items-start">
+                                    <div class="col-md-12">
+                                        <label class="form-label"> Assign Employee: <span style="color: red">*</span>
+                                            :</label>
+                                        <select name="employee_id" id="employee-select" class="form-control select">
+                                            <option value="" disabled selected>Select employee</option>
+                                            @foreach ($employees as $employee)
+                                                <option value="{{ $employee->id }}">
+                                                    {{ $employee ? $employee->first_name . ' ' . ($employee->middle_name ?? $employee->last_name) : '' }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-end">
+                                    <button type="submit" class="btn btn-primary">Update Status
+                                        <i class="ph-paper-plane-tilt ms-2"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
 
-                    <script src="{{ asset('assets/demo/pages/datatables_basic.js') }}"></script>
-                    <!-- /theme JS files -->
-                    <!-- Theme JS files -->
-                    <script src="{{ asset('assets/js/vendor/notifications/noty.min.js') }}"></script>
-                    <script src="{{ asset('assets/demo/pages/extra_noty.js') }}"></script>
-                    <!-- /theme JS files -->
-                @endpush
-            @endsection
+                    <!-- /page content -->
+                    @push('js')
+                        <!-- Theme JS files -->
+                        <script src="{{ asset('assets/js/jquery/jquery.min.js') }}"></script>
+                        <script src="{{ asset('assets/js/vendor/tables/datatables/datatables.min.js') }}"></script>
+
+                        <script src="{{ asset('assets/demo/pages/datatables_basic.js') }}"></script>
+                        <!-- /theme JS files -->
+                        <!-- Theme JS files -->
+                        <script src="{{ asset('assets/js/vendor/notifications/noty.min.js') }}"></script>
+                        <script src="{{ asset('assets/demo/pages/extra_noty.js') }}"></script>
+                        <!-- /theme JS files -->
+                        <script>
+                            $(document).ready(function() {
+                                $('.client-status-btn').click(function() {
+                                    let clientId = $(this).data('id');
+                                    let clientStatus = $(this).data('status');
+                                    let clientEmployee = $(this).data('employee');
+                                    
+                                    $('#id-select').val(clientId);
+                                    $('#status-select').val(clientStatus).change();
+                                    $('#employee-select').val(clientEmployee).change();
+                                });
+                            });
+                        </script>
+                    @endpush
+                @endsection

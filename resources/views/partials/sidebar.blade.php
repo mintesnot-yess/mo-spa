@@ -41,7 +41,6 @@
                         <i class="ph-house"></i>
                         <span>
                             {{ 'Dashboard' }}
-
                         </span>
                     </a>
                 </li>
@@ -81,7 +80,10 @@
                         </ul>
                     </li>
                 @endcan
-                @if (Auth::user()->can('show_employee') || Auth::user()->can('show_customer')|| Auth::user()->can('show_service')|| Auth::user()->can('show_category'))
+                @if (Auth::user()->can('show_employee') ||
+                        Auth::user()->can('show_customer') ||
+                        Auth::user()->can('show_service') ||
+                        Auth::user()->can('show_category'))
                     <li class="pt-0 nav-item-header">
                         <div class="opacity-50 text-uppercase fs-sm lh-sm sidebar-resize-hide">
                             {{ 'Registration' }}</div>
@@ -96,29 +98,17 @@
                         </a>
                         <ul
                             class="nav-group-sub {{ Route::is('employee*', 'client*', 'service*', 'category*') ? 'show' : 'collapse' }}">
-                            @can('show_employee')
-                            <li class="nav-item">
-                                <a href="{{ route('employee') }}"
-                                    class="nav-link {{ Route::is('employee*') ? 'active' : '' }}">
-                                    <i class="ph-users-three"></i>
-                                    <span>
-                                        {{ 'Employee' }}
-                                    </span>
-                                </a>
-                            </li>
-                            @endcan
-                            @can('show_customer')
-                            <li class="nav-item">
-                                <a href="{{ route('client') }}"
-                                    class="nav-link {{ Route::is('client*') ? 'active' : '' }}">
-                                    <i class="ph-handshake"></i>
-                                    <span>
-                                        {{ 'Customer' }}
-                                    </span>
-                                </a>
-                            </li>
-                            @endcan
-                            @can('show_service')
+                            @can('show_category')
+                                <li class="nav-item">
+                                    <a href="{{ route('category') }}"
+                                        class="nav-link {{ Route::is('category*') ? 'active' : '' }}">
+                                        <i class="ph-chart-bar-horizontal"></i>
+                                        <span>
+                                            {{ 'Category' }}
+                                        </span>
+                                    </a>
+                                </li>
+                            @endcan @can('show_service')
                             <li class="nav-item">
                                 <a href="{{ route('service') }}"
                                     class="nav-link {{ Route::is('service*') ? 'active' : '' }}">
@@ -128,18 +118,31 @@
                                     </span>
                                 </a>
                             </li>
+                        @endcan
+
+                            @can('show_employee')
+                                <li class="nav-item">
+                                    <a href="{{ route('employee') }}"
+                                        class="nav-link {{ Route::is('employee*') ? 'active' : '' }}">
+                                        <i class="ph-users-three"></i>
+                                        <span>
+                                            {{ 'Employee' }}
+                                        </span>
+                                    </a>
+                                </li>
                             @endcan
-                            @can('show_category')
-                            <li class="nav-item">
-                                <a href="{{ route('category') }}"
-                                    class="nav-link {{ Route::is('category*') ? 'active' : '' }}">
-                                    <i class="ph-chart-bar-horizontal"></i>
-                                    <span>
-                                        {{ 'Category' }}
-                                    </span>
-                                </a>
-                            </li>
+                            @can('show_customer')
+                                <li class="nav-item">
+                                    <a href="{{ route('client') }}"
+                                        class="nav-link {{ Route::is('client*') ? 'active' : '' }}">
+                                        <i class="ph-handshake"></i>
+                                        <span>
+                                            {{ 'Customer' }}
+                                        </span>
+                                    </a>
+                                </li>
                             @endcan
+                           
                         </ul>
                     </li>
                 @endif

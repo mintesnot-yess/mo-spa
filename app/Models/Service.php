@@ -19,4 +19,13 @@ class Service extends Model
         'updated_by',
         'status',
     ];
+    public function user(){
+        return $this->belongsTo(User::class, 'created_by');
+    }
+    public function updatedUser(){
+        return $this->belongsTo(User::class, 'updated_by');
+    }
+    public function categories(){
+        return $this->belongsTo(Category::class, 'category');
+    }
 }

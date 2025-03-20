@@ -22,4 +22,11 @@ class Employee extends Model
         'join_date',
         'created_by',
     ];
+    public function service(){
+        return $this->belongsTo(Service::class);
+    }
+    public function user(){
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
 }

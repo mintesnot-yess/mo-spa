@@ -76,7 +76,7 @@
                                                 @foreach ($categories as $category)
                                                     <option value="{{ $category->id }}"
                                                         @if (old('category',$service->category) == $category->id) selected @endif>
-                                                        {{ $category->name }}</option>
+                                                        {{ $category->title }}</option>
                                                 @endforeach
                                             </select>
                                             @error('category')
