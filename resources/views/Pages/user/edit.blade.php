@@ -105,8 +105,8 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label"> Confirm Password <span style="color: red">*</span>:</label>
-                                        <input type="password" class="form-control" name="password_comfirmation" placeholder="********">
-                                        @error('password_comfirmation')
+                                        <input type="password" class="form-control" name="password_confirmation" placeholder="********">
+                                        @error('password_confirmation')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>

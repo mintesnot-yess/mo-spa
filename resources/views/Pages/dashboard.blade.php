@@ -57,7 +57,7 @@
                     <div class="col-sm-6 col-xl-3">
                         <div class="card card-body">
                             <div class="d-flex align-items-center">
-                                <i class="ph ph-users-three ph-2x text-danger me-3"></i>
+                                <i class="ph ph-users-three ph-2x me-3"></i>
                                 <div class="flex-fill text-end">
                                     <h4 class="mb-0">{{ number_format($employee) }}</h4>
                                     <span class="text-muted">Employees</span>
@@ -69,7 +69,7 @@
                     <div class="col-sm-6 col-xl-3">
                         <div class="card card-body">
                             <div class="d-flex align-items-center">
-                                <i class="ph ph-stack ph-2x text-warning me-3"></i>
+                                <i class="ph ph-stack ph-2x text-primary me-3"></i>
                                 <div class="flex-fill text-end">
                                     <h4 class="mb-0">{{ number_format($service) }}</h4>
                                     <span class="text-muted">Services</span>
@@ -81,7 +81,7 @@
                     <div class="col-sm-6 col-xl-3">
                         <div class="card card-body">
                             <div class="d-flex align-items-center">
-                                <i class="ph-text-indent ph-2x text-primary me-3"></i>
+                                <i class="ph-text-indent ph-2x text-danger me-3"></i>
                                 <div class="flex-fill text-end">
                                     <h4 class="mb-0">{{ number_format($totalCategories) }}</h4>
                                     <span class="text-muted"> Total Categories </span>
@@ -105,7 +105,7 @@
                     <div class="col-sm-6 col-xl-3">
                         <div class="card card-body">
                             <div class="d-flex align-items-center">
-                                <i class="ph-currency-dollar-simple ph-2x me-3"></i>
+                                <i class="ph-currency-dollar-simple text-warning ph-2x me-3"></i>
 
                                 <div class="flex-fill text-end">
                                     <h4 class="mb-0">{{ number_format($totalTransaction) }}</h4>
@@ -117,7 +117,7 @@
                     <div class="col-sm-6 col-xl-3">
                         <div class="card card-body">
                             <div class="d-flex align-items-center">
-                                <i class="ph-shield-warning ph-2x me-3"></i>
+                                <i class="ph-shield-warning text-yellow ph-2x me-3"></i>
 
                                 <div class="flex-fill text-end">
                                     <h4 class="mb-0">{{ number_format($pendingTransaction) }}</h4>
@@ -129,7 +129,7 @@
                     <div class="col-sm-6 col-xl-3">
                         <div class="card card-body">
                             <div class="d-flex align-items-center">
-                                <i class="ph-shield-check ph-2x me-3"></i>
+                                <i class="ph-shield-check text-success ph-2x me-3"></i>
 
                                 <div class="flex-fill text-end">
                                     <h4 class="mb-0">{{ number_format($complatedTransaction) }}</h4>

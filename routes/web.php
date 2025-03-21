@@ -10,6 +10,7 @@ use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StafUserController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -22,7 +23,9 @@ Route::middleware(['web'])->group(function () {
         Route::post('/assignRolepermission/{id}', [RolePermissionController::class, 'assignRolePermission'])->name('assignRolePermission');
         // Dashboard 
         Route::get('/', [AdminController::class, 'index'])->name('dashboard');
-
+        Route::post('/notifications/mark-all-read', [AdminController::class, 'markAllRead'])
+        ->name('notifications.markAllRead');
+    
         // roles
         // Route::get('/role', [RoleController::class, 'index'])->name('role');
         Route::get('/role/create', [RoleController::class, 'create'])->name('role.create');
@@ -71,6 +74,12 @@ Route::middleware(['web'])->group(function () {
         Route::post('/setting/update/profile', [SettingController::class, 'update_profile'])->name('setting.update.profile');
         Route::post('/setting/update/password', [SettingController::class, 'update_password'])->name('setting.update.password');
 
+        Route::get('/pending/transaction', [TransactionController::class, 'pending_index'])->name('pendingTransaction');
+        Route::post('/pending/transaction/show', [TransactionController::class, 'pending_show'])->name('pendingTransaction.show');
+        
+        Route::get('/complated/transaction', [TransactionController::class, 'index'])->name('complatedTransaction');
+        Route::post('/complated/transaction/show', [TransactionController::class, 'show'])->name('complatedTransaction.show');
+        
         // Customer
         // Route::get('/customer', [CustomerController::class, 'index'])->name('customer.index');
 
@@ -85,23 +94,17 @@ Route::middleware(['web'])->group(function () {
         Route::get('/report', [ReportController::class, 'index'])->name('report');
         Route::post('/report/show', [ReportController::class, 'show'])->name('report.show');
         
-        Route::get('/ownVsprivate', [ReportController::class, 'ownVsprivate'])->name('ownVsprivate');
-        Route::post('/ownVsprivate/show', [ReportController::class, 'ownVsprivate_show'])->name('ownVsprivate.show');
+        Route::get('/report/service', [ReportController::class, 'service'])->name('byService');
+        Route::post('/report/service/show', [ReportController::class, 'service_show'])->name('byService.show');
         
-        Route::get('report/location', [ReportController::class, 'location'])->name('report.location');
-        Route::post('report/location/show', [ReportController::class, 'location_show'])->name('report.location.show');
+        Route::get('/report/employee', [ReportController::class, 'employee'])->name('byEmployee');
+        Route::post('/report/employee/show', [ReportController::class, 'employee_show'])->name('byEmployee.show');
 
-        Route::get('report/loadingType', [ReportController::class, 'loadingType'])->name('report.loadingType');
-        Route::post('report/loadingType/show', [ReportController::class, 'loadingType_show'])->name('report.loadingType.show');
+        Route::get('/report/customer', [ReportController::class, 'customer'])->name('byCustomer');
+        Route::post('/report/customer/show', [ReportController::class, 'customer_show'])->name('byCustomer.show');
 
-        Route::get('report/client', [ReportController::class, 'client'])->name('report.client');
-        Route::post('report/client/show', [ReportController::class, 'client_show'])->name('report.client.show');
-
-        Route::get('report/expenseType', [ReportController::class, 'expenseType'])->name('report.expenseType');
-        Route::post('report/expenseType/show', [ReportController::class, 'expenseType_show'])->name('report.expenseType.show');
-
-        Route::get('report/vehicle', [ReportController::class, 'vehicle'])->name('report.vehicle');
-        Route::post('report/vehicle/show', [ReportController::class, 'vehicle_show'])->name('report.vehicle.show');
+        Route::get('/report/customer_type', [ReportController::class, 'customer_type'])->name('byCustomerType');
+        Route::post('/report/customer_type/show', [ReportController::class, 'customer_type_show'])->name('byCustomerType.show');
 
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

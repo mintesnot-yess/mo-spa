@@ -51,17 +51,17 @@
                         <i class="ph-dots-three sidebar-resize-show"></i>
                     </li>
                     <li
-                        class="nav-item nav-item-submenu {{ Route::is('report*', 'report.client*', 'report.vehicle*', 'report.expenseType*', 'report.loadType*', 'report.location*', 'ownVsprivate*') ? 'nav-item-open' : '' }}">
+                        class="nav-item nav-item-submenu {{ Route::is('pendingTransaction*', 'complatedTransaction*') ? 'nav-item-open' : '' }}">
                         {{-- nav-item nav-item-submenu  nav-item-open --}}
                         <a href="#" class="nav-link">
                             <i class="ph-chart-bar"></i>
                             <span>Trensaction</span>
                         </a>
                         <ul
-                            class="nav-group-sub {{ Route::is('report*', 'report.client*', 'report.vehicle*', 'report.expenseType*', 'report.loadType*', 'report.location*', 'ownVsprivate*') ? 'show' : 'collapse' }}">
+                            class="nav-group-sub {{ Route::is('pendingTransaction*', 'complatedTransaction*') ? 'show' : 'collapse' }}">
                             <li class="nav-item">
-                                <a href="{{ route('report') }}"
-                                    class="nav-link {{ Route::currentRouteNamed('report') || Route::currentRouteNamed('report.show') ? 'active' : '' }}">
+                                <a href="{{ route('pendingTransaction') }}"
+                                    class="nav-link {{ Route::currentRouteNamed('pendingTransaction') || Route::currentRouteNamed('pendingTransaction.show') ? 'active' : '' }}">
                                     <i class="ph-file-text text-yellow"></i>
                                     <span>
                                         {{ 'Pending' }}
@@ -69,8 +69,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('ownVsprivate') }}"
-                                    class="nav-link {{ Route::currentRouteNamed('ownVsprivate') || Route::currentRouteNamed('ownVsprivate.show') ? 'active' : '' }}">
+                                <a href="{{ route('complatedTransaction') }}"
+                                    class="nav-link {{ Route::currentRouteNamed('complatedTransaction') || Route::currentRouteNamed('complatedTransaction.show') ? 'active' : '' }}">
                                     <i class="ph-file-text text-success"></i>
                                     <span>
                                         {{ 'Completed' }}
@@ -153,14 +153,14 @@
                         <i class="ph-dots-three sidebar-resize-show"></i>
                     </li>
                     <li
-                        class="nav-item nav-item-submenu {{ Route::is('report*', 'report.client*', 'report.vehicle*', 'report.expenseType*', 'report.loadType*', 'report.location*', 'ownVsprivate*') ? 'nav-item-open' : '' }}">
+                        class="nav-item nav-item-submenu {{ Route::is('report*', 'byCustomer*', 'byService*', 'byEmployee*', 'byCustomerType*') ? 'nav-item-open' : '' }}">
                         {{-- nav-item nav-item-submenu  nav-item-open --}}
                         <a href="#" class="nav-link">
                             <i class="ph-chart-line-up"></i>
                             <span>Report</span>
                         </a>
                         <ul
-                            class="nav-group-sub {{ Route::is('report*', 'report.client*', 'report.vehicle*', 'report.expenseType*', 'report.loadType*', 'report.location*', 'ownVsprivate*') ? 'show' : 'collapse' }}">
+                            class="nav-group-sub {{ Route::is('report*', 'byCustomer*', 'byService*', 'byEmployee*', 'byCustomerType*') ? 'show' : 'collapse' }}">
                             <li class="nav-item">
                                 <a href="{{ route('report') }}"
                                     class="nav-link {{ Route::currentRouteNamed('report') || Route::currentRouteNamed('report.show') ? 'active' : '' }}">
@@ -171,38 +171,38 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('report') }}"
-                                    class="nav-link {{ Route::currentRouteNamed('report') || Route::currentRouteNamed('report.show') ? 'active' : '' }}">
+                                <a href="{{ route('byService') }}"
+                                    class="nav-link {{ Route::currentRouteNamed('byService') || Route::currentRouteNamed('byService.show') ? 'active' : '' }}">
                                     <i class="ph-file-text"></i>
                                     <span>
-                                        {{ 'Transaction By Service' }}
+                                        {{ 'By Service' }}
                                     </span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('ownVsprivate') }}"
-                                    class="nav-link {{ Route::currentRouteNamed('ownVsprivate') || Route::currentRouteNamed('ownVsprivate.show') ? 'active' : '' }}">
+                                <a href="{{ route('byEmployee') }}"
+                                    class="nav-link {{ Route::currentRouteNamed('byEmployee') || Route::currentRouteNamed('byEmployee.show') ? 'active' : '' }}">
                                     <i class="ph-file-text"></i>
                                     <span>
-                                        {{ 'Transaction By Employee' }}
+                                        {{ 'By Employee' }}
                                     </span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('report.location') }}"
-                                    class="nav-link {{ Route::currentRouteNamed('report.location') || Route::currentRouteNamed('report.location.show') ? 'active' : '' }}">
+                                <a href="{{ route('byCustomer') }}"
+                                    class="nav-link {{ Route::currentRouteNamed('byCustomer') || Route::currentRouteNamed('byCustomer.show') ? 'active' : '' }}">
                                     <i class="ph-file-text"></i>
                                     <span>
-                                        {{ 'Transaction By Customer' }}
+                                        {{ 'By Customer' }}
                                     </span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('report.loadingType') }}"
-                                    class="nav-link {{ Route::currentRouteNamed('report.loadingType') || Route::currentRouteNamed('report.loadingType.show') ? 'active' : '' }}">
+                                <a href="{{ route('byCustomerType') }}"
+                                    class="nav-link {{ Route::currentRouteNamed('byCustomerType') || Route::currentRouteNamed('byCustomerType.show') ? 'active' : '' }}">
                                     <i class="ph-file-text"></i>
                                     <span>
-                                        {{ 'Transaction By Customer Type' }}
+                                        {{ 'By Customer Type' }}
                                     </span>
                                 </a>
                             </li>

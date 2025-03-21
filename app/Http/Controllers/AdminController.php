@@ -32,11 +32,17 @@ class AdminController extends Controller
         $pendingTransaction = Transaction::where('status', 1)->count();
         $complatedTransaction = Transaction::where('status', 0)->count();
 
-        $subscriberData = [323,245,265,4587,254,452,852,96,452,852,96,323];
-        $contactData = [123,225,465,587,254,552,352,396,452,852,932,43];
+        $subscriberData = [323, 245, 265, 4587, 254, 452, 852, 96, 452, 852, 96, 323];
+        $contactData = [123, 225, 465, 587, 254, 552, 352, 396, 452, 852, 932, 43];
 
-        return view('Pages.dashboard', compact('subscriberData','contactData','totalCategories', 'service','customer', 'user', 'employee','totalTransaction','complatedTransaction','pendingTransaction'));
+        return view('Pages.dashboard', compact('subscriberData', 'contactData', 'totalCategories', 'service', 'customer', 'user', 'employee', 'totalTransaction', 'complatedTransaction', 'pendingTransaction'));
     }
+    public function markAllRead()
+    {
+        auth()->user()->notifications()->update(['is_read' => true]);
+        return response()->json(['message' => 'All notifications marked as read']);
+    }
+
     public function login()
     {
         return view('auth.login');
