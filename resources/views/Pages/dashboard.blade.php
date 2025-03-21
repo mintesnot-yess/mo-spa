@@ -44,36 +44,22 @@
                     <div class="col-sm-6 col-xl-3">
                         <div class="card card-body">
                             <div class="d-flex align-items-center">
-                                <i class="ph-user-gear ph-2x me-3"></i>
+                                <i class="ph-user-focus ph-2x text-success me-3"></i>
 
                                 <div class="flex-fill text-end">
-                                    <h4 class="mb-0">{{ number_format($user, 2) }}</h4>
-                                    <span class="text-muted"> System User </span>
+                                    <h4 class="mb-0">{{ number_format($customer) }}</h4>
+                                    <span class="text-muted">Customers</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="card card-body">
-                            <div class="d-flex align-items-center">
-                                <i class="ph-truck ph-2x text-primary me-3"></i>
-                                <div class="flex-fill text-end">
-                                    <h4 class="mb-0">{{ number_format($vehicle, 2) }}</h4>
-                                    <span class="text-muted"> Vehicles </span>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
+                   
                     <div class="col-sm-6 col-xl-3">
                         <div class="card card-body">
                             <div class="d-flex align-items-center">
                                 <i class="ph ph-users-three ph-2x text-danger me-3"></i>
                                 <div class="flex-fill text-end">
-                                    <h4 class="mb-0">{{ number_format($employee, 2) }}</h4>
+                                    <h4 class="mb-0">{{ number_format($employee) }}</h4>
                                     <span class="text-muted">Employees</span>
                                 </div>
 
@@ -83,11 +69,71 @@
                     <div class="col-sm-6 col-xl-3">
                         <div class="card card-body">
                             <div class="d-flex align-items-center">
-                                <i class="ph-scroll ph-2x text-success me-3"></i>
+                                <i class="ph ph-stack ph-2x text-warning me-3"></i>
+                                <div class="flex-fill text-end">
+                                    <h4 class="mb-0">{{ number_format($service) }}</h4>
+                                    <span class="text-muted">Services</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="card card-body">
+                            <div class="d-flex align-items-center">
+                                <i class="ph-text-indent ph-2x text-primary me-3"></i>
+                                <div class="flex-fill text-end">
+                                    <h4 class="mb-0">{{ number_format($totalCategories) }}</h4>
+                                    <span class="text-muted"> Total Categories </span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>                   
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="card card-body">
+                            <div class="d-flex align-items-center">
+                                <i class="ph-user-gear ph-2x me-3"></i>
 
                                 <div class="flex-fill text-end">
-                                    <h4 class="mb-0">{{ number_format($orders, 2) }}</h4>
-                                    <span class="text-muted">Orders</span>
+                                    <h4 class="mb-0">{{ number_format($user) }}</h4>
+                                    <span class="text-muted"> System User </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="card card-body">
+                            <div class="d-flex align-items-center">
+                                <i class="ph-currency-dollar-simple ph-2x me-3"></i>
+
+                                <div class="flex-fill text-end">
+                                    <h4 class="mb-0">{{ number_format($totalTransaction) }}</h4>
+                                    <span class="text-muted"> Total Transactions </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="card card-body">
+                            <div class="d-flex align-items-center">
+                                <i class="ph-shield-warning ph-2x me-3"></i>
+
+                                <div class="flex-fill text-end">
+                                    <h4 class="mb-0">{{ number_format($pendingTransaction) }}</h4>
+                                    <span class="text-muted"> Pending Transactions </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="card card-body">
+                            <div class="d-flex align-items-center">
+                                <i class="ph-shield-check ph-2x me-3"></i>
+
+                                <div class="flex-fill text-end">
+                                    <h4 class="mb-0">{{ number_format($complatedTransaction) }}</h4>
+                                    <span class="text-muted"> Complated Transactions </span>
                                 </div>
                             </div>
                         </div>

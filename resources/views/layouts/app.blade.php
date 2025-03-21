@@ -48,7 +48,7 @@
 			</button>
 		</div> --}}
 
-		<div class="offcanvas-body">
+		<div class="offcanvas-body" id="demo_config">
 			<div class="mb-2 fw-semibold">Color mode</div>
 			<div class="mb-3 list-group">
 				<label class="mb-2 rounded list-group-item list-group-item-action form-check border-width-1">
@@ -78,6 +78,7 @@
 				</label>
 			</div>
 		</div>
+		
 	</div>
 	<!-- /demo config -->
    

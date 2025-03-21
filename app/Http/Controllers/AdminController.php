@@ -3,13 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Category;
+use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Driver;
+use App\Models\Employee;
 use App\Models\Expense;
 use App\Models\Order;
 use App\Models\PaymentCollection;
+use App\Models\Service;
+use App\Models\Transaction;
 use App\Models\Vehicle;
 
 class AdminController extends Controller
@@ -17,15 +22,20 @@ class AdminController extends Controller
     public function index(Request $request)
     {
         $user = User::count();
-        $employee = 454;
-        $vehicle = 432;
-        $orders = 332;
+        $employee = Employee::count();
+        $service = Service::count();
+        $customer = Client::count();
+        $totalCategories = Category::count();
+        // $categories = Category::whereNotNUll('parent_category_id')->count();
+        // $subCategories = Category::whereNUll('parent_category_id')->count();
+        $totalTransaction = Transaction::count();
+        $pendingTransaction = Transaction::where('status', 1)->count();
+        $complatedTransaction = Transaction::where('status', 0)->count();
 
         $subscriberData = [323,245,265,4587,254,452,852,96,452,852,96,323];
-
         $contactData = [123,225,465,587,254,552,352,396,452,852,932,43];
 
-        return view('Pages.dashboard', compact('subscriberData','contactData', 'orders', 'vehicle', 'user', 'employee'));
+        return view('Pages.dashboard', compact('subscriberData','contactData','totalCategories', 'service','customer', 'user', 'employee','totalTransaction','complatedTransaction','pendingTransaction'));
     }
     public function login()
     {

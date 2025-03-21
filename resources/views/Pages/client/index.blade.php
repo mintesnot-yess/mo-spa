@@ -85,7 +85,7 @@
                                         <td>
                                             <a href="#"
                                                 class="navbar-nav-link navbar-nav-link-icon rounded-pill client-status-btn"
-                                                data-bs-toggle="offcanvas" data-bs-target="#notifications"
+                                                data-bs-toggle="offcanvas" data-bs-target="#statuses"
                                                 data-id="{{ $client->id }}" data-status="{{ $client->status }}"
                                                 data-employee="{{ $client->employee_id }}">
                                                 <span
@@ -149,7 +149,7 @@
                     <!-- /basic datatable -->
 
                 </div>
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="notifications">
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="statuses">
                     <div class="py-0 offcanvas-header">
                         <h5 class="py-3 offcanvas-title">Customer Status</h5>
                         <button type="button" class="border-transparent btn btn-light btn-sm btn-icon rounded-pill"
