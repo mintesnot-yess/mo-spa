@@ -87,6 +87,7 @@ Route::middleware(['web'])->group(function () {
         Route::get('/staff', [StafUserController::class, 'staff'])->name('staff.index');
         Route::get('/staff/create', [StafUserController::class, 'staff_create'])->name('staff.create');
         Route::post('/staff/store', [StafUserController::class, 'staff_store'])->name('staff.store');
+        Route::post('/employee/touser/store', [StafUserController::class, 'user_from_employee'])->name('empToUser.store');
         Route::get('/staff/edit/{id}', [StafUserController::class, 'staff_edit'])->name('staff.edit');
         Route::post('/staff/update/{id}', [StafUserController::class, 'staff_update'])->name('staff.update');
         Route::delete('/staff/delete/{id}', [StafUserController::class, 'staff_delete'])->name('staff.delete');

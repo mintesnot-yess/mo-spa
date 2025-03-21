@@ -194,7 +194,7 @@
                             </div>
                         </div>
                     </form>
-
+                </div>
                     <!-- /page content -->
                     @push('js')
                         <!-- Theme JS files -->

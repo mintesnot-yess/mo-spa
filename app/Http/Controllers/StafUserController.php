@@ -37,7 +37,7 @@ class StafUserController extends Controller
 
         $user = User::create([
             'name' => $request->name,
-            'email' => $request->email,            
+            'email' => $request->email,
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
         ]);
@@ -45,6 +45,26 @@ class StafUserController extends Controller
         $user->syncRoles($role);
 
         return redirect()->route('staff.index')->with('success', 'Staff user successfully Added');
+    }
+    public function user_from_employee(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'role' => ['required'],
+            'phone' => ['required'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'password' => Hash::make($request->password),
+        ]);
+
+        $role = Role::find($request->role);
+        $user->syncRoles($role);
+        return redirect()->back()->with('success', 'Employee successfully Added to staf user');
     }
     public function staff_edit($id)
     {
