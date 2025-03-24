@@ -93,19 +93,19 @@ Route::middleware(['web'])->group(function () {
         Route::delete('/staff/delete/{id}', [StafUserController::class, 'staff_delete'])->name('staff.delete');
 
         Route::get('/report', [ReportController::class, 'index'])->name('report');
-        Route::post('/report/show', [ReportController::class, 'show'])->name('report.show');
+        Route::get('/report/show', [ReportController::class, 'show'])->name('report.show');
         
         Route::get('/report/service', [ReportController::class, 'service'])->name('byService');
-        Route::post('/report/service/show', [ReportController::class, 'service_show'])->name('byService.show');
+        Route::get('/report/service/show', [ReportController::class, 'service_show'])->name('byService.show');
         
         Route::get('/report/employee', [ReportController::class, 'employee'])->name('byEmployee');
-        Route::post('/report/employee/show', [ReportController::class, 'employee_show'])->name('byEmployee.show');
+        Route::get('/report/employee/show', [ReportController::class, 'employee_show'])->name('byEmployee.show');
 
         Route::get('/report/customer', [ReportController::class, 'customer'])->name('byCustomer');
-        Route::post('/report/customer/show', [ReportController::class, 'customer_show'])->name('byCustomer.show');
+        Route::get('/report/customer/show', [ReportController::class, 'customer_show'])->name('byCustomer.show');
 
         Route::get('/report/customer_type', [ReportController::class, 'customer_type'])->name('byCustomerType');
-        Route::post('/report/customer_type/show', [ReportController::class, 'customer_type_show'])->name('byCustomerType.show');
+        Route::get('/report/customer_type/show', [ReportController::class, 'customer_type_show'])->name('byCustomerType.show');
 
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
