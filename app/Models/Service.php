@@ -14,11 +14,17 @@ class Service extends Model
         'title',
         'category',
         'price',
+        'have_items',
+        'items',
         'type',
         'created_by',
         'updated_by',
         'status',
     ];
+    protected $casts = [
+        'items' => 'array',
+    ];
+    
     public function user(){
         return $this->belongsTo(User::class, 'created_by');
     }
@@ -28,4 +34,8 @@ class Service extends Model
     public function categories(){
         return $this->belongsTo(Category::class, 'category');
     }
+     public function itemServices()
+{
+    return $this->hasMany(ServiceItems::class, 'service_id');
+}
 }

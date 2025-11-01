@@ -6,6 +6,12 @@
             display: flex;
             justify-content: flex-end;
         }
+        .wide-offcanvas {
+            width: 30vw !important;
+            /* Adjust width as needed */
+            max-width: 90vw;
+            /* Optional: Prevent excessive width */
+        }
     </style>
 @endpush
 @section('content')
@@ -52,11 +58,6 @@
 
                     <!-- Basic datatable -->
                     <div class="card">
-                        {{-- @can('add_staff_user')
-                            <div class="add">
-                                <a href="{{ route('staff.create') }}" class="btn btn-edit"><i class="ph-plus-circle"></i> Add System User</a>
-                            </div>
-                        @endcan --}}
                         <table class="table datatable-basic">
                             <thead>
                                 <tr>
@@ -71,40 +72,64 @@
                             </thead>
                             <tbody>
                                 @php
-                                    $counter = $transactions->firstItem();
+                                    $counter = 1;
                                 @endphp
-                                @foreach ($transactions as $transactions)                              
-                                    
+                                @foreach($transactions as $group)
+                                    @php 
+                                        $firstTransaction = $group->first(); // Get first transaction in the group
+                                        $customer = $firstTransaction->client;
+                                        $serviceCount = $group->count(); // Count services
+                                    @endphp
                                     <tr>
-                                        
-                                        <td>{{ $counter++ }}</td>
-                                        <td>{{ $transactions->client->name }}</td>
-                                
-                                        <td>{{ $transactions->sesx }}</td>
-                                        <td>{{ $transactions->phone }}</td>
-                                        <td>{{ $transactions->clinet->type ?? '' }} </td>
-                                        <td>{{ $transactions->service->title ?? '' }} </td>
-                                        <td>{{ \Carbon\Carbon::parse($transactions->created_at)->format('M-d-Y') }}</td>
-                                        
+                                        <td>{{$counter++}}</td>
+                                        <td>{{ $customer->name ?? 'N/A' }}</td>
+                                        <td>{{ $customer->sex ?? 'N/A' }}</td>
+                                        <td>...{{ substr($customer->phone ?? '', -6) }}</td>
+                                        <td>{{ $customer->category === 'Special' ? 'VIP' : 'Regular' }}</td>
+                                        <td>
+                                            <a href="#" onclick="loadServiceDetails({{ $group }})" 
+                                               data-bs-toggle="offcanvas" 
+                                               data-bs-target="#show-service">
+                                                {{ $serviceCount }} Services
+                                            </a>
+                                        </td>
+                                        <td>{{ $firstTransaction->created_at->format('Y-m-d') }}</td>
                                     </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
-                        @if ($transactions->hasPages())
-                            <style>
-                                .datatable-footer {
-                                    display: none;
-                                    border-top: var(--border-width) solid var(--border-color);
-                                }
-                            </style>
-                            {{ $transactions->links('pagination::bootstrap-5') }}
-                        @endif
+                       
                     </div>
                     <!-- /basic datatable -->
 
                 </div>
                 <!-- /page content -->
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="show-service">
+                    <div class="py-0 offcanvas-header">
+                        <h5 class="py-3 offcanvas-title">Service Taking</h5>
+                        <button type="button" class="border-transparent btn btn-light btn-sm btn-icon rounded-pill"
+                            data-bs-dismiss="offcanvas">
+                            <i class="ph-x"></i>
+                        </button>
+                    </div>
+                    <div class="p-0 offcanvas-body">
+                        <div class="p-3">
+                            <div class="mb-3 d-flex align-items-start">
+                                <table class="table datatable" id="service-details">
+                                    <thead>
+                                        <tr>
+                                            <th>Service</th>
+                                            <th>Employee</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Dynamic data will be inserted here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 @push('js')
                     <!-- Theme JS files -->
                     <script src="{{ asset('assets/js/jquery/jquery.min.js') }}"></script>
@@ -116,6 +141,21 @@
                     <script src="{{ asset('assets/js/vendor/notifications/noty.min.js') }}"></script>
                     <script src="{{ asset('assets/demo/pages/extra_noty.js') }}"></script>
                     <!-- /theme JS files -->
+                    <script>
+                        function loadServiceDetails(transactions) {
+                            let serviceTableBody = document.querySelector("#service-details tbody");
+                            serviceTableBody.innerHTML = ""; // Clear previous content
                     
+                            transactions.forEach(transaction => {
+                                let row = `
+                                    <tr>
+                                        <td>${transaction.service.title ?? 'Unknown'}</td>
+                                        <td>${transaction.employee.first_name ?? 'N/A'}</td>
+                                    </tr>
+                                `;
+                                serviceTableBody.innerHTML += row;
+                            });
+                        }
+                    </script>
                 @endpush
             @endsection

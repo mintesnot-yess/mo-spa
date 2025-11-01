@@ -128,15 +128,19 @@
                                         <div class="col-md-6">
                                             <label class="form-label"> Service Group: <span style="color: red">*</span>
                                                 :</label>
-                                            <select name="service_id" class="form-control select">
+                                            <select name="service_group" class="form-control select">
                                                 <option value="" disabled selected>Select service</option>
-                                                @foreach ($services as $service)
-                                                    <option value="{{ $service->id }}"
-                                                        @if (old('service_id') == $service->id) selected @endif>
-                                                        {{ $service->title }}</option>
-                                                @endforeach
+                                                 <option value="ጸጉር ቆራጭ" @if (old('type') == 'ጸጉር ቆራጭ') selected @endif>
+                                                    ጸጉር ቆራጭ</option>
+                                                <option value="ስፓ" @if (old('type') == 'ስፓ') selected @endif>
+                                                    ስፓ</option>
+                                                <option value="የውስጥ ስራዎች" @if (old('type') == 'የውስጥ ስራዎች') selected @endif>
+                                                    የውስጥ ስራዎች</option>
+                                                <option value="ሌላ" @if (old('type') == 'ሌላ') selected @endif>
+                                                    ሌላ</option>
+
                                             </select>
-                                            @error('service_id')
+                                            @error('service_group')
                                                 <div class="text-danger">
                                                     {{ $message }}</div>
                                             @enderror
@@ -153,10 +157,35 @@
                                                     {{ $message }}</div>
                                             @enderror
                                         </div>
+                                         <div class="col-md-6">
+                                            <label class="form-label"> Branch: <span style="color: red">*</span>
+                                                :</label>
+                                            <select name="branch_id" class="form-control select">
+                                                <option value="" disabled selected>Select branch</option>
+                                                @foreach ($branches as $branch)
+                                                    <option value="{{ $branch->id }}"
+                                                        @if (old('branch_id') == $branch->id) selected @endif>
+                                                        {{ $branch->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('branch_id')
+                                                <div class="text-danger">
+                                                    {{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label"> Code <span style="color: red">*</span> :</label>
+                                            <input type="text" class="form-control" name="code"
+                                                value="{{ old('code') }}">
+                                            @error('code')
+                                                <div class="text-danger">
+                                                    {{ $message }}</div>
+                                            @enderror
+                                        </div> 
                                     </div>
 
                                     <div class="mt-3 text-end">
-                                        <button type="submit" class="btn btn-primary">Add Employee
+                                        <button type="submit" class="btn btn-primary" onclick="this.disabled=true;this.form.submit();">Add Employee
                                             <i class="ph-paper-plane-tilt ms-2"></i></button>
                                     </div>
                                 </form>
@@ -164,11 +193,11 @@
                         </div>
                     </div>
                     @push('js')
+                        <script src="{{ asset('assets/js/jquery/jquery.min.js') }}"></script>
                         <script src="{{ asset('assets/js/vendor/forms/tags/tokenfield.min.js') }}"></script>
                         <script src="{{ asset('assets/demo/pages/form_tags.js') }}"></script>
                         <script src="{{ asset('assets/js/vendor/forms/selects/select2.min.js') }}"></script>
                         <script src="{{ asset('assets/demo/pages/form_select2.js') }}"></script>
-                        <script src="{{ asset('assets/js/jquery/jquery.min.js') }}"></script>
                     @endpush
 
                 @endsection

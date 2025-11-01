@@ -48,23 +48,30 @@
                             <div class="card-body border-top">
                                 <form action="{{ route('staff.store') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
-                                    <div class="row">
+                                    <div class="row">                                        
                                         <div class="col-md-6">
-                                            <label class="form-label"> User Name <span style="color: red">*</span> :</label>
-                                            <input type="text" class="form-control" name="name"
-                                                placeholder="User name" value="{{ old('name') }}">
-                                            @error('name')
+                                            <label class="form-label"> Employee <span style="color: red">*</span>
+                                                :</label>
+                                            <select name="employee" class="form-control select">
+                                                <option value="">Select a employee...</option>
+                                                @foreach ($employees as $employee)
+                                                    <option value="{{ $employee->id }}"
+                                                        {{ old('employee') == $employee->id ? 'selected' : '' }}>
+                                                        {{ $employee->first_name }} {{ $employee->last_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('employee')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
-
                                         <div class="col-md-6">
                                             <label class="form-label">Role <span style="color: red">*</span> :</label>
                                             <select name="role" class="form-control select">
                                                 <option value="">Select a role...</option>
                                                 @foreach ($roles as $role)
                                                     <option value="{{ $role->id }}"
-                                                        {{ old('role' == $role->id ? 'selected' : '') }}>
+                                                        {{ old('role') == $role->id ? 'selected' : '' }}>
                                                         {{ $role->name }}
                                                     </option>
                                                 @endforeach
@@ -74,28 +81,8 @@
                                             @enderror
                                         </div>
                                     </div>
+                                   
                                     <div class="row">
-
-                                        <div class="col-md-6">
-                                            <label class="form-label">Email <span style="color: red">*</span> :</label>
-                                            <input type="email" class="form-control" name="email"
-                                                placeholder="jondo@gmail.com" value="{{ old('email') }}">
-                                            @error('email')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label">Phone <span style="color: red">*</span>:</label>
-                                            <input type="text" class="form-control" name="phone"
-                                                placeholder="09-2050-3040" value="{{ old('phone') }}">
-                                            @error('phone')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        
-
                                         <div class="col-md-6">
                                             <label class="form-label">Password <span style="color: red">*</span> :</label>
                                             <input type="password" class="form-control" name="password"
@@ -105,23 +92,41 @@
                                             @enderror
                                         </div>
                                         <div class="col-md-6">
-                                            <label class="form-label"> Confirm Password <span style="color: red">*</span> :</label>
+                                            <label class="form-label"> Confirm Password <span style="color: red">*</span>
+                                                :</label>
                                             <input type="password" class="form-control" name="password_confirmation"
                                                 placeholder="********">
                                             @error('password_confirmation')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
+                                        
+                                    </div>
+                                     <div class="row">
+
+                                        <div class="col-md-6">
+                                            <label class="form-label">Profile Image :</label>
+                                            <input type="file" class="form-control" name="image">
+                                            @error('image')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        
                                     </div>
 
+                                    </div>
                                     <div class="text-end uper">
                                         <button type="submit" data-animation="lightSpeedIn" class="btn btn-primary"> Add
                                             User <i class="ph-paper-plane-tilt ms-2"></i></button>
                                     </div>
                                 </form>
 
-                            </div>
+                            {{-- </div>
                         </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div> --}}
                     </div>
                     <!-- /basic layout -->
 

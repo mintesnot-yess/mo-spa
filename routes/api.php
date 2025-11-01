@@ -18,13 +18,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/profile', function (Request $request) {
-    return $request->user();
-});
-Route::post('/login', [AuthController::class, 'login']);
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/services', [ServiceController::class, 'index']);
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/send-service-request', [ServiceController::class, 'send_service_request']);
     Route::get('/active-customers', [ClientController::class, 'activeCustomers']);
+    Route::get('/services', [ServiceController::class, 'index']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/reception/active-customers', [ClientController::class, 'receptionactiveCustomers']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/notification', [AuthController::class, 'notification']);
+    Route::post('/notifications/mark-all-read', [AuthController::class, 'markAllRead']);
+    Route::post('/mark-prepared', [AuthController::class, 'markcomplated']);
+    Route::get('/profile', [AuthController::class, 'profile']);
+    Route::get('/active-staff ', [ClientController::class, 'activeStaff']);
+    Route::post('/profile/update', [AuthController::class, 'profile_update']);
+    Route::get('/staff-customers', [ClientController::class, 'staffCustomers']);
     Route::get('/report', [ReportController::class, 'index']);
+    Route::post('/activate-customer', [ClientController::class, 'activateCustomer']);
+    Route::post('/scan-customer', [ClientController::class, 'scanCustomer']);
 });

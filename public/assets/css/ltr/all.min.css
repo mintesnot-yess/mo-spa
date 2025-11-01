@@ -2183,7 +2183,7 @@ progress {
 
 .table {
     --table-cell-padding-y: 0.75rem;
-    --table-cell-padding-x: 1.25rem;
+    --table-cell-padding-x: 0.25rem;
     --table-bg: transparent;
     --table-color: var(--body-color);
     --table-border-width: var(--border-width);
@@ -16932,7 +16932,8 @@ html[data-color-theme=dark] .table {
 
 .table>:not(caption)>*>* {
     border-bottom-width: 0;
-    border-top-width: var(--table-border-width)
+    border-top-width: var(--table-border-width);
+    font-size: 13px;
 }
 
 .table>:not(caption):first-child>:first-child>* {
@@ -32868,9 +32869,13 @@ html[data-color-theme=dark] .gridjs-table .gridjs-th-fixed {
 .datatable-scroll,
 .datatable-scroll-lg,
 .datatable-scroll-sm {
-    min-height: .01%;    
+    min-height: .01%;
     /* overflow-x: auto; */
     overflow: auto;
+}
+
+.dataTables_length .form-select{
+    width: auto;
 }
 
 .datatable-scroll-wrap {

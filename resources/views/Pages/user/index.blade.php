@@ -9,8 +9,7 @@
     </style>
 @endpush
 @section('content')
-    @php
-    @endphp
+
     <!-- Page content -->
     <div class="page-content">
 
@@ -61,9 +60,11 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Image</th>
                                     <th>User Name</th>
                                     <th>Phone</th>
                                     <th>Email</th>
+                                    <th>Status</th>
                                     <th>Role</th>
                                     <th>Registerd In</th>
                                     <th class="text-center">Action</th>
@@ -71,17 +72,25 @@
                             </thead>
                             <tbody>
                                 @php
-                                    $counter = $users->firstItem();
+                                    $counter = 1;
                                 @endphp
                                 @foreach ($users as $user)                              
                                     
                                     <tr>
                                         
                                         <td>{{ $counter++ }}</td>
+                                        <td><img src="{{asset('file/' . $user->image)}}" alt="" style="width: 70px; height: 50px;"></td>
                                         <td>{{ $user->name }}</td>
                                 
                                         <td>{{ $user->phone }}</td>
                                         <td>{{ $user->email }}</td>
+                                        <td>
+                                            <label class="form-switch form-check-reverse">
+                                                <input type="checkbox" class="form-check-input service-status-toggle"
+                                                    data-id="{{ $user->id }}"
+                                                    {{ $user->status == 1 ? 'checked' : '' }}>
+                                            </label>
+                                        </td>
                                         <td>
                                             {{ optional($user->roles->first())->name ?? 'No Role Assigned' }}
                                         </td>
@@ -121,15 +130,7 @@
 
                             </tbody>
                         </table>
-                        @if ($users->hasPages())
-                            <style>
-                                .datatable-footer {
-                                    display: none;
-                                    border-top: var(--border-width) solid var(--border-color);
-                                }
-                            </style>
-                            {{ $users->links('pagination::bootstrap-5') }}
-                        @endif
+                        
                     </div>
                     <!-- /basic datatable -->
 
@@ -138,6 +139,8 @@
                 @push('js')
                     <!-- Theme JS files -->
                     <script src="{{ asset('assets/js/jquery/jquery.min.js') }}"></script>
+                    
+                    
                     <script src="{{ asset('assets/js/vendor/tables/datatables/datatables.min.js') }}"></script>
 
                     <script src="{{ asset('assets/demo/pages/datatables_basic.js') }}"></script>
@@ -146,6 +149,71 @@
                     <script src="{{ asset('assets/js/vendor/notifications/noty.min.js') }}"></script>
                     <script src="{{ asset('assets/demo/pages/extra_noty.js') }}"></script>
                     <!-- /theme JS files -->
+                    
+                    <script>
+                        $(document).ready(function() {
+                            // Attach event using delegation
+                            $(document).on('change', '.service-status-toggle', function() {
+                                let serviceId = $(this).data('id');
+                                let newStatus = $(this).is(':checked') ? 1 : 0;
+                    
+                                
+                                $.ajax({
+                                    url: "{{ route('user.updateStatus') }}",
+                                    type: "POST",
+                                    data: {
+                                        _token: "{{ csrf_token() }}",
+                                        id: serviceId,
+                                        status: newStatus
+                                    },
+                                    success: function(response) {
+                                        if (response.success) {
+                                            alert('User status updated successfully!');
+                                        } else {
+                                            alert('Failed to update user status.');
+                                        }
+                                    },
+                                    error: function() {
+                                        alert('Something went wrong!');
+                                    }
+                                });
+                            });
+                        });
+                    </script>
+
+                    <!--<script>-->
+                    <!--    $(document).ready(function() {-->
+                    <!--        $('.service-status-toggle').change(function() {-->
+                                
+                                
+                    <!--        alert("newStatus");-->
+                                
+                    <!--            let serviceId = $(this).data('id');-->
+                    <!--            let newStatus = $(this).is(':checked') ? 1 : 0;-->
+                                
+                    <!--            alert(newStatus);-->
+                    <!--            $.ajax({-->
+                    <!--                url: "{{ route('user.updateStatus') }}",-->
+                    <!--                type: "POST",-->
+                    <!--                data: {-->
+                    <!--                    _token: "{{ csrf_token() }}",-->
+                    <!--                    id: serviceId,-->
+                    <!--                    status: newStatus-->
+                    <!--                },-->
+                    <!--                success: function(response) {-->
+                    <!--                    if (response.success) {-->
+                    <!--                        alert('User status updated successfully!');-->
+                    <!--                    } else {-->
+                    <!--                        alert('Failed to update user status.');-->
+                    <!--                    }-->
+                    <!--                },-->
+                    <!--                error: function() {-->
+                    <!--                    alert('Something went wrong!');-->
+                    <!--                }-->
+                    <!--            });-->
+                    <!--        });-->
+                    <!--    });-->
+                    <!--</script>-->
                     
                 @endpush
             @endsection

@@ -1,7 +1,7 @@
 @php
-    $newNotifications = App\Models\Notification::where('is_read', false)->get();
+    $newNotifications = App\Models\Notification::where('user_id',auth()->user()->id)->where('is_read', false)->orderBy('created_at', 'desc')->get();
     $unreadNotificationsCount = $newNotifications->count();
-    $oldNotifications = App\Models\Notification::where('is_read', true)->take(3)->get();
+    $oldNotifications = App\Models\Notification::where('user_id',auth()->user()->id)->where('is_read', true)->orderBy('created_at', 'desc')->take(3)->get();
 @endphp
 <!-- Main navbar -->
 <div class="navbar navbar-dark navbar-expand-lg navbar-static border-bottom border-bottom-white border-opacity-10">

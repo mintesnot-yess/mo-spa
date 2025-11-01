@@ -10,7 +10,9 @@ class Employee extends Model
     use HasFactory;
     protected $table = 'employees'; 
     protected $fillable = [
-        'service_id',
+        'code',
+        'service_group',
+        'branch_id',
         'code',
         'first_name',
         'middle_name',
@@ -24,6 +26,9 @@ class Employee extends Model
     ];
     public function service(){
         return $this->belongsTo(Service::class);
+    }
+    public function branch(){
+        return $this->belongsTo(Branch::class);
     }
     public function user(){
         return $this->belongsTo(User::class, 'created_by');

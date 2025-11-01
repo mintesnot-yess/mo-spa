@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Service;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -10,7 +11,7 @@ class CategoryController extends Controller
     public function index()
     {
         // Fetch all categories from the database
-        $categories = Category::orderBy('created_at', 'desc')->paginate(10);
+        $categories = Category::orderBy('created_at', 'desc')->get();
         
         return view('Pages.categories.index', compact('categories'));
     }
@@ -57,6 +58,14 @@ class CategoryController extends Controller
         return redirect()->route('category')->with('success', 'Category updated successfully.');
     }
     public function destroy($id){
+        $parentCategory = Category::where('parent_category_id',$id)->count();
+        if ($parentCategory > 0) {
+        return redirect()->back()->with('error', "The category cannot be deleted because it is currently Associated to {$parentCategory} category(s).");
+    }
+        $service = Service::where('category',$id)->count();
+        if ($service > 0) {
+        return redirect()->back()->with('error', "The category cannot be deleted because it is currently Associated to {$service} service(s).");
+    }
         $category = Category::find($id);
         $category->delete();
         return redirect()->route('category')->with('success', 'Category deleted successfully.');

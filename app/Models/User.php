@@ -23,6 +23,8 @@ class User extends Authenticatable
         'email',
         'phone',
         'password',
+        'image',
+        'emp_id'
     ];
 
     /**
@@ -48,5 +50,9 @@ class User extends Authenticatable
     public function notifications()
     {
         return $this->hasMany(Notification::class, 'user_id'); // Adjust column if needed
+    }
+   public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'emp_id', 'id');
     }
 }

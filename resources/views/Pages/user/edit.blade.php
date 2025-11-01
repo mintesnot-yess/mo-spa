@@ -48,14 +48,23 @@
                                 <form action="{{ route('staff.update', $user->id) }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">
-                                    <div class="col-md-6">
-                                        <label class="form-label">User Name <span style="color: red">*</span>:</label>
-                                        <input type="text" class="form-control" name="name" value="{{$user->name}}">
-                                        @error('name')
+                                         <div class="col-md-6">
+                                        <label class="form-label"> Employee <span style="color: red">*</span>
+                                            :</label>
+                                        <select name="employee" class="form-control select">
+                                            <option value="">Select a role...</option>
+                                            @foreach ($employees as $employee)
+                                                <option value="{{ $employee->id }}"
+                                                    {{ $user->emp_id == $employee->id ? 'selected' : '' }}>
+                                                      {{ $employee->first_name }} {{ $employee->last_name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('employee')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="col-md-6">
+                                        <div class="col-md-6">
                                         <label class="form-label">Role <span style="color: red">*</span>:</label>
                                         <select name="role" class="form-control select">
                                             <option value="">Select a role...</option>   
@@ -74,43 +83,42 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
+                                   
+                                    
                                     </div>
+                                    
                                     <div class="row">
                                         
                                     <div class="col-md-6">
-                                        <label class="form-label">Email <span style="color: red">*</span> :</label>
-                                        <input type="email" class="form-control" name="email" value="{{$user->email}}">
-                                        @error('email')
+                                        <label class="form-label">Profile Image  :</label>
+                                        <input type="file" class="form-control" name="image">
+                                        @error('image')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label">Phone <span style="color: red">*</span>:</label>
-                                        <input type="text" class="form-control" name="phone" value="{{$user->phone}}">
-                                        @error('phone')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    </div>
+                                    
+                                   
+                                </div>
                                     {{-- <hr> --}}
                                     {{-- <h6>Optional</h6> --}}
                                     <hr>
                                     <div class="row">
                                     <div class="col-md-6">
-                                        <label class="form-label">Password <span style="color: red">*</span>:</label>
+                                        <label class="form-label">Password :</label>
                                         <input type="password" class="form-control" name="password" placeholder="********">
                                         @error('password')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label"> Confirm Password <span style="color: red">*</span>:</label>
+                                        <label class="form-label"> Confirm Password :</label>
                                         <input type="password" class="form-control" name="password_confirmation" placeholder="********">
                                         @error('password_confirmation')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     </div>
+                                    
 
                                     <div class="text-end uper">
                                         <button type="submit" data-animation="lightSpeedIn" class="btn btn-primary">Update User <i class="ph-paper-plane-tilt ms-2"></i></button>
@@ -124,9 +132,9 @@
 
                 </div>
                 @push('js')
+                <script src="{{ asset('assets/js/jquery/jquery.min.js') }}"></script>
                 <script src="{{ asset('assets/js/vendor/forms/tags/tokenfield.min.js') }}"></script>
                 <script src="{{ asset('assets/demo/pages/form_tags.js') }}"></script>
-                <script src="{{ asset('assets/js/jquery/jquery.min.js') }}"></script>
                 <script src="{{ asset('assets/js/vendor/forms/selects/select2.min.js') }}"></script>
                 <script src="{{ asset('assets/demo/pages/form_select2.js') }}"></script>
             @endpush

@@ -29,6 +29,7 @@
         <div class="sidebar-section">
             <ul class="nav nav-sidebar" data-nav-type="accordion">
 
+                @can('show_dashboard')
                 <!-- Main -->
                 <li class="pt-0 nav-item-header">
                     <div class="opacity-50 text-uppercase fs-sm lh-sm sidebar-resize-hide">{{ 'General' }}
@@ -44,201 +45,284 @@
                         </span>
                     </a>
                 </li>
-                @can('show_report')
-                    <li class="pt-0 nav-item-header">
-                        <div class="opacity-50 text-uppercase fs-sm lh-sm sidebar-resize-hide">
-                            {{ 'Trensaction' }}</div>
-                        <i class="ph-dots-three sidebar-resize-show"></i>
-                    </li>
-                    <li
-                        class="nav-item nav-item-submenu {{ Route::is('pendingTransaction*', 'complatedTransaction*') ? 'nav-item-open' : '' }}">
-                        {{-- nav-item nav-item-submenu  nav-item-open --}}
-                        <a href="#" class="nav-link">
-                            <i class="ph-chart-bar"></i>
-                            <span>Trensaction</span>
-                        </a>
-                        <ul
-                            class="nav-group-sub {{ Route::is('pendingTransaction*', 'complatedTransaction*') ? 'show' : 'collapse' }}">
-                            <li class="nav-item">
-                                <a href="{{ route('pendingTransaction') }}"
-                                    class="nav-link {{ Route::currentRouteNamed('pendingTransaction') || Route::currentRouteNamed('pendingTransaction.show') ? 'active' : '' }}">
-                                    <i class="ph-file-text text-yellow"></i>
-                                    <span>
-                                        {{ 'Pending' }}
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('complatedTransaction') }}"
-                                    class="nav-link {{ Route::currentRouteNamed('complatedTransaction') || Route::currentRouteNamed('complatedTransaction.show') ? 'active' : '' }}">
-                                    <i class="ph-file-text text-success"></i>
-                                    <span>
-                                        {{ 'Completed' }}
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+
                 @endcan
-                @if (Auth::user()->can('show_employee') ||
-                        Auth::user()->can('show_customer') ||
-                        Auth::user()->can('show_service') ||
-                        Auth::user()->can('show_category'))
-                    <li class="pt-0 nav-item-header">
-                        <div class="opacity-50 text-uppercase fs-sm lh-sm sidebar-resize-hide">
-                            {{ 'Registration' }}</div>
-                        <i class="ph-dots-three sidebar-resize-show"></i>
-                    </li>
-                    <li
-                        class="nav-item nav-item-submenu {{ Route::is('employee*', 'client*', 'service*', 'category*') ? 'nav-item-open' : '' }}">
-                        {{-- nav-item nav-item-submenu  nav-item-open --}}
-                        <a href="#" class="nav-link">
-                            <i class="ph-scroll"></i>
-                            <span>Registration</span>
-                        </a>
-                        <ul
-                            class="nav-group-sub {{ Route::is('employee*', 'client*', 'service*', 'category*') ? 'show' : 'collapse' }}">
-                            @can('show_category')
-                                <li class="nav-item">
-                                    <a href="{{ route('category') }}"
-                                        class="nav-link {{ Route::is('category*') ? 'active' : '' }}">
-                                        <i class="ph-chart-bar-horizontal"></i>
-                                        <span>
-                                            {{ 'Category' }}
-                                        </span>
-                                    </a>
-                                </li>
-                            @endcan @can('show_service')
-                            <li class="nav-item">
-                                <a href="{{ route('service') }}"
-                                    class="nav-link {{ Route::is('service*') ? 'active' : '' }}">
-                                    <i class="ph-stack"></i>
-                                    <span>
-                                        {{ 'Service' }}
-                                    </span>
-                                </a>
-                            </li>
+
+                @if (Auth::user()->can('show_completed_transaction') ||
+                Auth::user()->can('show_pending_transaction'))
+                <li class="pt-0 nav-item-header">
+                    <div class="opacity-50 text-uppercase fs-sm lh-sm sidebar-resize-hide">
+                        {{ 'Trensaction' }}</div>
+                    <i class="ph-dots-three sidebar-resize-show"></i>
+                </li>
+                <li
+                    class="nav-item nav-item-submenu {{ Route::is('pendingTransaction*', 'complatedTransaction*') ? 'nav-item-open' : '' }}">
+                    {{-- nav-item nav-item-submenu nav-item-open --}}
+                    <a href="#" class="nav-link">
+                        <i class="ph-chart-bar"></i>
+                        <span>Trensaction</span>
+                    </a>
+                    <ul
+                        class="nav-group-sub {{ Route::is('pendingTransaction*', 'complatedTransaction*') ? 'show' : 'collapse' }}">
+                        @can('show_pending_transaction')
+                        <li class="nav-item">
+                            <a href="{{ route('pendingTransaction') }}"
+                                class="nav-link {{ Route::currentRouteNamed('pendingTransaction') || Route::currentRouteNamed('pendingTransaction.show') ? 'active' : '' }}">
+                                <i class="ph-file-text text-yellow"></i>
+                                <span>
+                                    {{ 'Pending' }}
+                                </span>
+                            </a>
+                        </li>
+                        @endcan
+                        @can('show_completed_transaction')
+                        <li class="nav-item">
+                            <a href="{{ route('complatedTransaction') }}"
+                                class="nav-link {{ Route::currentRouteNamed('complatedTransaction') || Route::currentRouteNamed('complatedTransaction.show') ? 'active' : '' }}">
+                                <i class="ph-file-text text-success"></i>
+                                <span>
+                                    {{ 'Completed' }}
+                                </span>
+                            </a>
+                        </li>
+                        @endcan
+                    </ul>
+                </li>
+                @endif
+
+
+
+
+
+                <li class="pt-0 nav-item-header">
+                    <div class="opacity-50 text-uppercase fs-sm lh-sm sidebar-resize-hide">
+                        {{ 'HR' }}</div>
+                    <i class="ph-dots-three sidebar-resize-show"></i>
+                </li>
+
+                <li class="nav-item nav-item-submenu {{ Route::is('attendance*', 'sms*') ? 'nav-item-open' : '' }}">
+                    {{-- nav-item nav-item-submenu nav-item-open --}}
+                    <a href="#" class="nav-link">
+                        <i class="ph-chart-bar"></i>
+                        <span>Attendance</span>
+                    </a>
+
+
+                    <ul class="nav-group-sub {{ Route::is('attendance*', 'sms*') ? 'show' : 'collapse' }}">
+                        @can('show_pending_transaction')
+                        <li class="nav-item">
+                            <a href="{{ route('attendance.index') }}"
+                                class="nav-link {{ Route::currentRouteNamed('attendance') || Route::currentRouteNamed('attendance.index') ? 'active' : '' }}">
+                                <i class="ph-file-text text-yellow"></i>
+                                <span>
+                                    {{ 'Attendance' }}
+                                </span>
+                            </a>
+                        </li>
                         @endcan
 
-                            @can('show_employee')
-                                <li class="nav-item">
-                                    <a href="{{ route('employee') }}"
-                                        class="nav-link {{ Route::is('employee*') ? 'active' : '' }}">
-                                        <i class="ph-users-three"></i>
-                                        <span>
-                                            {{ 'Employee' }}
-                                        </span>
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('show_customer')
-                                <li class="nav-item">
-                                    <a href="{{ route('client') }}"
-                                        class="nav-link {{ Route::is('client*') ? 'active' : '' }}">
-                                        <i class="ph-handshake"></i>
-                                        <span>
-                                            {{ 'Customer' }}
-                                        </span>
-                                    </a>
-                                </li>
-                            @endcan
-                           
-                        </ul>
-                    </li>
+                        @can('show_completed_transaction')
+                        <li class="nav-item">
+                            <a href="{{ route('sms.index') }}"
+                                class="nav-link {{ Route::currentRouteNamed('sms.index') || Route::currentRouteNamed('sms.index') ? 'active' : '' }}">
+                                <i class="ph-file-text text-success"></i>
+                                <span>
+                                    {{ 'SMS' }}
+                                </span>
+                            </a>
+                        </li>
+                        @endcan
+
+                        @can('show_completed_transaction')
+                        <li class="nav-item">
+                            <a href="{{ route('complatedTransaction') }}"
+                                class="nav-link {{ Route::currentRouteNamed('complatedTransaction') || Route::currentRouteNamed('complatedTransaction.show') ? 'active' : '' }}">
+                                <i class="ph-file-text text-success"></i>
+                                <span>
+                                    {{ 'Reports' }}
+                                </span>
+                            </a>
+                        </li>
+                        @endcan
+                    </ul>
+                </li>
+
+
+
+
+                @if (Auth::user()->can('show_employee') ||
+                Auth::user()->can('show_customer') ||
+                Auth::user()->can('show_item') ||
+                Auth::user()->can('show_branch') ||
+                Auth::user()->can('show_service') ||
+                Auth::user()->can('show_category'))
+                <li class="pt-0 nav-item-header">
+                    <div class="opacity-50 text-uppercase fs-sm lh-sm sidebar-resize-hide">
+                        {{ 'Registration' }}</div>
+                    <i class="ph-dots-three sidebar-resize-show"></i>
+                </li>
+                <li
+                    class="nav-item nav-item-submenu {{ Route::is('employee*', 'client*', 'service*', 'category*') ? 'nav-item-open' : '' }}">
+                    {{-- nav-item nav-item-submenu nav-item-open --}}
+                    <a href="#" class="nav-link">
+                        <i class="ph-scroll"></i>
+                        <span>Registration</span>
+                    </a>
+                    <ul
+                        class="nav-group-sub {{ Route::is('employee*', 'client*', 'branch*', 'service*', 'category*','item*') ? 'show' : 'collapse' }}">
+                        @can('show_item')
+                        <li class="nav-item">
+                            <a href="{{ route('item') }}" class="nav-link {{ Route::is('item*') ? 'active' : '' }}">
+                                <i class="ph-chart-bar-horizontal"></i>
+                                <span>
+                                    {{ 'Items' }}
+                                </span>
+                            </a>
+                        </li>
+                        @endcan
+                        @can('show_category')
+                        <li class="nav-item">
+                            <a href="{{ route('category') }}"
+                                class="nav-link {{ Route::is('category*') ? 'active' : '' }}">
+                                <i class="ph-chart-bar-horizontal"></i>
+                                <span>
+                                    {{ 'Category' }}
+                                </span>
+                            </a>
+                        </li>
+                        @endcan
+                        @can('show_branch')
+                        <li class="nav-item">
+                            <a href="{{ route('branch') }}" class="nav-link {{ Route::is('branch*') ? 'active' : '' }}">
+                                <i class="ph-buildings"></i>
+                                <span>
+                                    {{ 'Branch' }}
+                                </span>
+                            </a>
+                        </li>
+                        @endcan
+                        @can('show_service')
+                        <li class="nav-item">
+                            <a href="{{ route('service') }}"
+                                class="nav-link {{ Route::is('service*') ? 'active' : '' }}">
+                                <i class="ph-stack"></i>
+                                <span>
+                                    {{ 'Service' }}
+                                </span>
+                            </a>
+                        </li>
+                        @endcan
+
+                        @can('show_employee')
+                        <li class="nav-item">
+                            <a href="{{ route('employee') }}"
+                                class="nav-link {{ Route::is('employee*') ? 'active' : '' }}">
+                                <i class="ph-users-three"></i>
+                                <span>
+                                    {{ 'Employee' }}
+                                </span>
+                            </a>
+                        </li>
+                        @endcan
+                        @can('show_customer')
+                        <li class="nav-item">
+                            <a href="{{ route('client') }}" class="nav-link {{ Route::is('client*') ? 'active' : '' }}">
+                                <i class="ph-handshake"></i>
+                                <span>
+                                    {{ 'Customer' }}
+                                </span>
+                            </a>
+                        </li>
+                        @endcan
+
+                    </ul>
+                </li>
                 @endif
                 @can('show_report')
-                    <li class="pt-0 nav-item-header">
-                        <div class="opacity-50 text-uppercase fs-sm lh-sm sidebar-resize-hide">
-                            {{ 'Report' }}</div>
-                        <i class="ph-dots-three sidebar-resize-show"></i>
-                    </li>
-                    <li
-                        class="nav-item nav-item-submenu {{ Route::is('report*', 'byCustomer*', 'byService*', 'byEmployee*', 'byCustomerType*') ? 'nav-item-open' : '' }}">
-                        {{-- nav-item nav-item-submenu  nav-item-open --}}
-                        <a href="#" class="nav-link">
-                            <i class="ph-chart-line-up"></i>
-                            <span>Report</span>
-                        </a>
-                        <ul
-                            class="nav-group-sub {{ Route::is('report*', 'byCustomer*', 'byService*', 'byEmployee*', 'byCustomerType*') ? 'show' : 'collapse' }}">
-                            <li class="nav-item">
-                                <a href="{{ route('report') }}"
-                                    class="nav-link {{ Route::currentRouteNamed('report') || Route::currentRouteNamed('report.show') ? 'active' : '' }}">
-                                    <i class="ph-file-text"></i>
-                                    <span>
-                                        {{ 'Transaction Report' }}
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('byService') }}"
-                                    class="nav-link {{ Route::currentRouteNamed('byService') || Route::currentRouteNamed('byService.show') ? 'active' : '' }}">
-                                    <i class="ph-file-text"></i>
-                                    <span>
-                                        {{ 'By Service' }}
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('byEmployee') }}"
-                                    class="nav-link {{ Route::currentRouteNamed('byEmployee') || Route::currentRouteNamed('byEmployee.show') ? 'active' : '' }}">
-                                    <i class="ph-file-text"></i>
-                                    <span>
-                                        {{ 'By Employee' }}
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('byCustomer') }}"
-                                    class="nav-link {{ Route::currentRouteNamed('byCustomer') || Route::currentRouteNamed('byCustomer.show') ? 'active' : '' }}">
-                                    <i class="ph-file-text"></i>
-                                    <span>
-                                        {{ 'By Customer' }}
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('byCustomerType') }}"
-                                    class="nav-link {{ Route::currentRouteNamed('byCustomerType') || Route::currentRouteNamed('byCustomerType.show') ? 'active' : '' }}">
-                                    <i class="ph-file-text"></i>
-                                    <span>
-                                        {{ 'By Customer Type' }}
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                <li class="pt-0 nav-item-header">
+                    <div class="opacity-50 text-uppercase fs-sm lh-sm sidebar-resize-hide">
+                        {{ 'Report' }}</div>
+                    <i class="ph-dots-three sidebar-resize-show"></i>
+                </li>
+                <li
+                    class="nav-item nav-item-submenu {{ Route::is('report*', 'byCustomer*', 'byService*', 'byEmployee*') ? 'nav-item-open' : '' }}">
+                    {{-- nav-item nav-item-submenu nav-item-open --}}
+                    <a href="#" class="nav-link">
+                        <i class="ph-chart-line-up"></i>
+                        <span>Report</span>
+                    </a>
+                    <ul
+                        class="nav-group-sub {{ Route::is('report*', 'byCustomer*', 'byService*', 'byEmployee*') ? 'show' : 'collapse' }}">
+                        <li class="nav-item">
+                            <a href="{{ route('report') }}"
+                                class="nav-link {{ Route::currentRouteNamed('report') || Route::currentRouteNamed('report.show') ? 'active' : '' }}">
+                                <i class="ph-file-text"></i>
+                                <span>
+                                    {{ 'Transaction Report' }}
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('byService') }}"
+                                class="nav-link {{ Route::currentRouteNamed('byService') || Route::currentRouteNamed('byService.show') ? 'active' : '' }}">
+                                <i class="ph-file-text"></i>
+                                <span>
+                                    {{ 'By Service' }}
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('byEmployee') }}"
+                                class="nav-link {{ Route::currentRouteNamed('byEmployee') || Route::currentRouteNamed('byEmployee.show') ? 'active' : '' }}">
+                                <i class="ph-file-text"></i>
+                                <span>
+                                    {{ 'By Employee' }}
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('byCustomer') }}"
+                                class="nav-link {{ Route::currentRouteNamed('byCustomer') || Route::currentRouteNamed('byCustomer.show') ? 'active' : '' }}">
+                                <i class="ph-file-text"></i>
+                                <span>
+                                    {{ 'By Customer' }}
+                                </span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
                 @endcan
 
                 @if (Auth::user()->can('show_staff_user') || Auth::user()->can('show_role'))
-                    <li class="pt-0 nav-item-header">
-                        <div class="opacity-50 text-uppercase fs-sm lh-sm sidebar-resize-hide">
-                            {{ 'User Management' }}</div>
-                        <i class="ph-dots-three sidebar-resize-show"></i>
-                    </li>
+                <li class="pt-0 nav-item-header">
+                    <div class="opacity-50 text-uppercase fs-sm lh-sm sidebar-resize-hide">
+                        {{ 'User Management' }}</div>
+                    <i class="ph-dots-three sidebar-resize-show"></i>
+                </li>
 
-                    @can('show_staff_user')
-                        <li class="nav-item">
-                            <a href="{{ route('staff.index') }}"
-                                class="nav-link {{ Route::currentRouteNamed('staff.index') || Route::currentRouteNamed('staff.create') || Route::currentRouteNamed('staff.edit') ? 'active' : '' }}">
-                                <i class="ph-user-circle-plus"></i>
-                                <span>
-                                    {{ 'System User' }}
-                                </span>
-                            </a>
-                        </li>
-                    @endcan
-                    @can('show_role')
-                        <li class="nav-item">
-                            <a href="{{ route('rolepermission') }}"
-                                class="nav-link {{ Route::currentRouteNamed('rolepermission') || Route::currentRouteNamed('assignPermission') || Route::currentRouteNamed('role.create') || Route::currentRouteNamed('role.edit') ? 'active' : '' }}">
-                                <i class="ph-user-list"></i>
-                                <span>
-                                    {{ 'Role And Permission' }}
-                                </span>
-                            </a>
-                        </li>
-                    @endcan
+                @can('show_staff_user')
+                <li class="nav-item">
+                    <a href="{{ route('staff.index') }}"
+                        class="nav-link {{ Route::currentRouteNamed('staff.index') || Route::currentRouteNamed('staff.create') || Route::currentRouteNamed('staff.edit') ? 'active' : '' }}">
+                        <i class="ph-user-circle-plus"></i>
+                        <span>
+                            {{ 'System User' }}
+                        </span>
+                    </a>
+                </li>
+                @endcan
+                @can('show_role')
+                <li class="nav-item">
+                    <a href="{{ route('rolepermission') }}"
+                        class="nav-link {{ Route::currentRouteNamed('rolepermission') || Route::currentRouteNamed('assignPermission') || Route::currentRouteNamed('role.create') || Route::currentRouteNamed('role.edit') ? 'active' : '' }}">
+                        <i class="ph-user-list"></i>
+                        <span>
+                            {{ 'Role And Permission' }}
+                        </span>
+                    </a>
+                </li>
+                @endcan
                 @endif
 
             </ul>

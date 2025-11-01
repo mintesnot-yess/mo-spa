@@ -58,12 +58,7 @@
 
                     <!-- Basic datatable -->
                     <div class="card">
-                        {{-- @can('add_role') --}}
-                            <div class="add">
-                                <a href="{{ route('role.create') }}" class="btn btn-edit"><i class="ph-plus-circle"></i>
-                                    Add Role</a>
-                            </div>
-                        {{-- @endcan --}}
+                        
                         <table class="table datatable-basic">
                             <thead>
                                 <tr>
@@ -95,7 +90,7 @@
                                         <td class="text-center">
                                             <div class="d-inline-flex">
                                                 <div class="dropdown">
-                                                    <a href="#" class="text-body {{ $role->name === 'Admin' ? 'disabled' : '' }}" data-bs-toggle="dropdown">
+                                                    <a href="#" class="text-body {{ $role->name === 'Admin' || $role->name === 'Reception' || $role->name === 'Staff' || $role->name === 'Supervisor' || $role->name === 'Item Coordinator' ? 'disabled' : '' }}" data-bs-toggle="dropdown">
                                                         <i class="ph-list"></i>
                                                     </a>
 
@@ -128,15 +123,6 @@
 
                             </tbody>
                         </table>
-                        @if ($roles->hasPages())
-                        <style>
-                            .datatable-footer {
-                                display: none;
-                                border-top: var(--border-width) solid var(--border-color);
-                            }
-                        </style>
-                        {{ $roles->links('pagination::bootstrap-5') }}
-                    @endif
                         
                     </div>
                     <!-- /basic datatable -->

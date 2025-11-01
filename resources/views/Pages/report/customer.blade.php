@@ -42,27 +42,27 @@
                     <div class="mb-4 card-header page-header-light">
                         <div class="row ">
                             <div class="col-md-8">
-                                <form method="POST" action="{{ route('byService.show') }}"
+                                <form method="get" action="{{ route('byCustomer.show') }}"
                                     class="p-3 bg-white rounded shadow">
                                     @csrf
                                     <div class="row align-items-end">
                                         <div class="col-md-3">
                                             <label for="start" class="font-weight-bold">From</label>
-                                            <input type="month" id="start" name="start" value="{{ $start }}"
+                                            <input type="date" id="start" name="start" value="{{ request('start', $start) }}"
                                                 class="form-control">
                                         </div>
 
                                         <div class="col-md-3">
                                             <label for="end" class="font-weight-bold">To</label>
-                                            <input type="month" id="end" name="end" value="{{ $end }}"
+                                            <input type="date" id="end" name="end" value="{{ request('end', $end) }}"
                                                 class="form-control">
                                         </div>
                                         <div class="col-md-3">
                                             <label for="end" class="font-weight-bold">Customer</label>
                                             <select name="customer" id="customer" class="form-control select">
                                                 <option value="all">All</option>
-                                                @foreach ($customers as $customer)
-                                                    <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                                @foreach ($customers as $cust)
+                                                    <option value="{{ $cust->id }}"  @if (old('customer',$customer) == $cust->id) selected @endif>{{ $cust->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -98,13 +98,13 @@
                                         @foreach ($transactions as $transaction)
                                             <tr>
                                                 <td>{{ $counter++ }}</td>
-                                                <td>{{ $transaction->clinet->name }}</td>
-                                                <td>{{ $transaction->clinet->category }}</td>
-                                                <td>{{ $transaction->service->title }}</td>
-                                                <td>{{ $transaction->employee->first_name }}</td>
-                                                <td>{{ $transaction->crated_at }}</td>
-                                                <td>{{ $transaction->status }}</td>
-                                                <td>{{ $transaction->is_new }}</td>
+                                                <td>{{ $transaction->client ? $transaction->client->name : '' }}</td>
+                                                <td>{{ $transaction->client && $transaction->client->category === 'Special' ? 'VIP' : 'Regular' }}</td>
+                                                <td>{{ $transaction->service ? $transaction->service->title : '' }}</td>
+                                                <td>{{ $transaction->employee ? $transaction->employee->first_name : '' }}</td>
+                                                <td>{{ $transaction->created_at }}</td>
+                                                <td>{{ $transaction->status == 0 ? 'Complated' : 'Pending' }}</td>
+                                                <td>{{ $transaction->is_new == 1 ? 'Yes' : 'No' }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -133,7 +133,7 @@
                     <script src="{{ asset('assets/js/vendor/forms/selects/select2.min.js') }}"></script>
                     <script src="{{ asset('assets/demo/pages/form_select2.js') }}"></script>
 
-                    <script>
+                    {{-- <script>
                         $(document).ready(function() {
                             $('#get').click(function() {
                                 var start = $("#start").val();
@@ -141,12 +141,12 @@
                                 var type = $("#type").val();
 
                                 $.ajax({
-                                    url: "{{ route('byService.show') }}",
+                                    url: "{{ route('byCustomer.show') }}",
                                     type: "POST",
                                     data: {
                                         start: start,
                                         end: end,
-                                        service: service_id,
+                                        customer: customer,
                                         _token: '{{ csrf_token() }}'
                                     },
                                     success: function(data) {
@@ -157,6 +157,6 @@
                                 });
                             });
                         });
-                    </script>
+                    </script> --}}
                 @endpush
             @endsection

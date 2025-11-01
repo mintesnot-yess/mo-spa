@@ -67,7 +67,7 @@
                             </thead>
                             <tbody>
                                 @php
-                                    $counter = $categories->firstItem();
+                                    $counter = 1;
                                 @endphp
                                 @foreach ($categories as $category)
                                     <tr>
@@ -110,15 +110,7 @@
 
                             </tbody>
                         </table>
-                        @if ($categories->hasPages())
-                            <style>
-                                .datatable-footer {
-                                    display: none;
-                                    border-top: var(--border-width) solid var(--border-color);
-                                }
-                            </style>
-                            {{ $categories->links('pagination::bootstrap-5') }}
-                        @endif
+                       
                     </div>
                     <!-- /basic datatable -->
 

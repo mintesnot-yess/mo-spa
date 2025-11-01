@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Spatie\Permission\Models\Role;
@@ -53,6 +54,12 @@ class RoleController extends Controller
         if($role->name === 'Admin'){            
             return redirect()->back()->with('error', 'Role Admin can not be deleted.');
         }
+         // Check if any users have this role
+    $usersWithRole = User::role($role->name)->count();
+
+    if ($usersWithRole > 0) {
+        return redirect()->back()->with('error', "The role '{$role->name}' cannot be deleted because it is currently assigned to {$usersWithRole} user(s).");
+    }
         $role->delete();
         return redirect()->route('rolepermission')->with('error','Role Deleted Successfully !');
     }

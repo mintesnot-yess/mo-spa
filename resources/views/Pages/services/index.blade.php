@@ -61,8 +61,9 @@
                                     <th>Title</th>
                                     <th>Code</th>
                                     <th>Category</th>
+                                    <th>Service Type</th>
                                     <th>Price</th>
-                                    <th>Type</th>
+                                    <th>Items</th>
                                     <th>Status</th>
                                     <th>Created By</th>
                                     <th>Update By</th>
@@ -71,7 +72,7 @@
                             </thead>
                             <tbody>
                                 @php
-                                    $counter = $services->firstItem();
+                                    $counter = 1;
                                 @endphp
                                 @foreach ($services as $service)
                                     <tr>
@@ -79,10 +80,26 @@
                                         <td>{{ $service ? $service->title : '' }}</td>
                                         <td>{{ $service ? $service->code : '' }}</td>
                                         <td>{{ $service->categories ? $service->categories->title : '' }}</td>
-                                        <td>{{ $service ? $service->price : '' }}</td>
                                         <td>{{ $service ? $service->type : '' }}</td>
+                                        <td>{{ $service ? $service->price : '' }}</td>
                                         <td>
-                                            <label class="form-check form-switch form-check-reverse">
+                                         @php
+    $displayed = [];
+    $itemNames = [];
+
+    foreach ($service->itemServices as $itemService) {
+        if ($itemService->item && !in_array($itemService->item->id, $displayed)) {
+            $itemNames[] = $itemService->item->name;
+            $displayed[] = $itemService->item->id;
+        }
+    }
+@endphp
+
+{{ implode(', ', $itemNames) }}
+
+                                            </td>
+                                        <td>
+                                            <label class="form-switch form-check-reverse">
                                                 <input type="checkbox" class="form-check-input service-status-toggle"
                                                     data-id="{{ $service->id }}"
                                                     {{ $service->status == 1 ? 'checked' : '' }}>
@@ -124,15 +141,7 @@
 
                             </tbody>
                         </table>
-                        @if ($services->hasPages())
-                            <style>
-                                .datatable-footer {
-                                    display: none;
-                                    border-top: var(--border-width) solid var(--border-color);
-                                }
-                            </style>
-                            {{ $services->links('pagination::bootstrap-5') }}
-                        @endif
+
                     </div>
                     <!-- /basic datatable -->
 
@@ -172,7 +181,7 @@
                                         }
                                     },
                                     error: function() {
-                                        alert('Something went wrong!');
+                                        alert('Service status updated successfully!');
                                     }
                                 });
                             });

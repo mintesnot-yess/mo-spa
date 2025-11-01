@@ -53,7 +53,7 @@
                             </div>
                         </div>
                     </div>
-                   
+
                     <div class="col-sm-6 col-xl-3">
                         <div class="card card-body">
                             <div class="d-flex align-items-center">
@@ -78,7 +78,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-xl-3">
+                    {{-- <div class="col-sm-6 col-xl-3">
                         <div class="card card-body">
                             <div class="d-flex align-items-center">
                                 <i class="ph-text-indent ph-2x text-danger me-3"></i>
@@ -89,8 +89,8 @@
 
                             </div>
                         </div>
-                    </div>                   
-                    <div class="col-sm-6 col-xl-3">
+                    </div> --}}
+                    {{-- <div class="col-sm-6 col-xl-3">
                         <div class="card card-body">
                             <div class="d-flex align-items-center">
                                 <i class="ph-user-gear ph-2x me-3"></i>
@@ -101,7 +101,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="col-sm-6 col-xl-3">
                         <div class="card card-body">
                             <div class="d-flex align-items-center">
@@ -139,95 +139,31 @@
                         </div>
                     </div>
                 </div>
-                {{-- <div class="row">
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="card card-body">
-                            <div class="d-flex align-items-center">
-                                <i class="ph-trend-up ph-2x me-3"></i>
-
-                                <div class="flex-fill text-end">
-                                    <h4 class="mb-0">{{ number_format($yearlySumPayment, 2) }}</h4>
-                                    <span class="text-muted"> This Year Income </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="card card-body">
-                            <div class="d-flex align-items-center">
-                                <i class="ph-currency-circle-dollar ph-2x text-danger me-3"></i>
-                                <div class="flex-fill text-end">
-                                    <h4 class="mb-0">{{ number_format($yearlySumExpense, 2) }}</h4>
-                                    <span class="text-muted"> This Year Expense </span>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="card card-body">
-                            <div class="d-flex align-items-center">
-                                <i class="ph-wallet ph-2x text-primary me-3"></i>
-                                <div class="flex-fill text-end">
-                                    <h4 class="mb-0">{{ number_format($monthlySumPayment, 2) }}</h4>
-                                    <span class="text-muted">This Month Income</span>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="card card-body">
-                            <div class="d-flex align-items-center">
-                                <i class="ph-receipt ph-2x text-danger me-3"></i>
-                                <div class="flex-fill text-end">
-                                    <h4 class="mb-0">{{ number_format($monthlySumExpense, 2) }}</h4>
-                                    <span class="text-muted">This Month Expense</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-                <!-- Quick stats boxes -->
-
-                <!-- /main charts -->
-
-
-
-
+                
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="row">
-                                <div class="col-md-9">
-
-                                </div>
-                                {{-- <div class="col-md-3">
-                                    <form method="GET" action="{{ route('dashboard') }}">
-                                        @csrf
-                                        <div class="row align-items-end">
-                                            <div class="col-md-6">
-                                                <label for="year" class="font-weight-bold"></label>
-                                                <input type="number" id="year" name="year"
-                                                    value="{{ $yearr }}" class="form-control" min="2000"
-                                                    max="2099" step="1">
-                                            </div>
-
-                                            <div class="mt-3 col-md-4 text-md-left mt-md-0">
-                                                <button id="getYearReport" class="btn btn-primary w-100" type="submit">
-                                                    <i class="fas fa-search"></i> Get
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div> --}}
                             </div>
                             <div class="card-body">
                                 <div class="chart-container">
                                     <div class="chart has-fixed-height" id="line_multiple" style="height: 440px;"></div>
+                                </div>
+                            </div>
+
+                            <!-- /line multiples -->
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="row">
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <div class="chart has-fixed-height" id="transaction" style="height: 440px;"></div>
                                 </div>
                             </div>
 
@@ -242,6 +178,110 @@
             <!-- Theme JS files -->
 
             <script src="{{ asset('assets/js/vendor/visualization/echarts/echarts.min.js') }}"></script>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Check if echarts is loaded
+                    if (typeof echarts === 'undefined') {
+                        console.warn('ECharts is not loaded.');
+                        return;
+                    }
+
+                    var chartEl = document.getElementById('transaction');
+
+                    if (!chartEl) {
+                        console.error('Chart container not found');
+                        return;
+                    }
+
+                    // Init the chart
+                    var chart = echarts.init(chartEl, null, {
+                        renderer: 'svg'
+                    });
+
+                    // Set chart options
+                    chart.setOption({
+                        color: ['#f17a52', '#03A9F4', '#8E44AD', '#16A085', '#E67E22', '#2C3E50'],
+                        textStyle: {
+                            fontFamily: 'var(--body-font-family)',
+                            color: 'var(--body-color)',
+                            fontSize: 14,
+                            lineHeight: 22,
+                            textBorderColor: 'transparent'
+                        },
+                        animationDuration: 750,
+                        grid: {
+                            left: 10,
+                            right: 20,
+                            top: 40,
+                            bottom: 40,
+                            containLabel: true
+                        },
+                        title: {
+                            left: 'center',
+                            text: 'Total Transaction by Branchs',
+                            textStyle: {
+                                fontSize: 15,
+                                fontWeight: 500,
+                                color: 'var(--body-color)'
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            backgroundColor: 'var(--white)',
+                            borderColor: 'var(--gray-400)',
+                            padding: 15,
+                            textStyle: {
+                                color: '#000'
+                            },
+                            formatter: function(params) {
+                                let html = `<strong>${params[0].axisValueLabel}</strong><br/>`;
+                                params.forEach(item => {
+                                    html += `
+                            <div class='d-flex align-items-center'>
+                                <span class="p-1 rounded-pill me-2" style="background-color: ${item.color}"></span>
+                                ${item.seriesName}: ${Number(item.value).toLocaleString()}
+                            </div>
+                        `;
+                                });
+                                return html;
+                            }
+                        },
+                        xAxis: {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+                            ]
+                        },
+                        yAxis: {
+                            type: 'value'
+                        },
+                        series: @json($transactionSeries)
+                    });
+
+                    // Resize chart on sidebar toggle or window resize
+                    var resizeChart = function() {
+                        if (chart) {
+                            chart.resize();
+                        }
+                    };
+
+                    // Sidebar toggle support
+                    document.querySelectorAll('.sidebar-control').forEach(toggler => {
+                        toggler.addEventListener('click', resizeChart);
+                    });
+
+                    // Window resize debounce
+                    let resizeTimer;
+                    window.addEventListener('resize', function() {
+                        clearTimeout(resizeTimer);
+                        resizeTimer = setTimeout(resizeChart, 200);
+                    });
+                });
+            </script>
+
+
             <script>
                 var EchartsLinesMultipleLight = function() {
                     var _linesMultipleLightExample = function() {
@@ -257,7 +297,7 @@
                             });
 
                             line_multiple.setOption({
-                                color: ['#f17a52', '#03A9F4'],
+                                color: ['#f17a52', '#03A9F4', '#8E44AD', '#16A085', '#E67E22', '#2C3E50'],
                                 textStyle: {
                                     fontFamily: 'var(--body-font-family)',
                                     color: 'var(--body-color)',
@@ -278,7 +318,7 @@
 
                                 title: {
                                     left: 'center',
-                                    text: 'Income Vs Expense',
+                                    text: 'Total Income by Branchs',
                                     textStyle: {
                                         fontSize: 15,
                                         fontWeight: 500,
@@ -295,31 +335,29 @@
                                     textStyle: {
                                         color: '#000'
                                     },
-                                    formatter: function(a) {
-                                        return (
-                                            a[0]['axisValueLabel'] +
-                                            "<div class='d-flex align-items-center'>" +
-                                            '<span class="p-1 rounded-pill me-2" style="background-color: ' +
-                                            a[0]['color'] + '"></span>' +
-                                            a[0]['seriesName'] + ': ' + Number(a[0]['value'])
-                                            .toLocaleString() + // Ensure number format
-                                            "</div>" +
-                                            "<div class='d-flex align-items-center'>" +
-                                            '<span class="p-1 rounded-pill me-2" style="background-color: ' +
-                                            a[1]['color'] + '"></span>' +
-                                            a[1]['seriesName'] + ': ' + Number(a[1]['value'])
-                                            .toLocaleString() + // Ensure number format
-                                            "</div>"
-                                        );
+                                    formatter: function(params) {
+                                        let tooltipHtml = `<strong>${params[0].axisValueLabel}</strong><br/>`;
+
+                                        params.forEach(item => {
+                                            tooltipHtml += `
+<div class='d-flex align-items-center'>
+    <span class="p-1 rounded-pill me-2" style="background-color: ${item.color}"></span>
+    ${item.seriesName}: ${Number(item.value).toLocaleString()}
+</div>
+`;
+                                        });
+
+                                        return tooltipHtml;
                                     }
+
 
                                 },
 
                                 xAxis: {
                                     type: 'category',
                                     boundaryGap: false,
-                                    data: ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar',
-                                        'Apr', 'May'
+                                    data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
+                                        'Nov', 'Dec'
                                     ]
                                 },
 
@@ -327,23 +365,8 @@
                                     type: 'value'
                                 },
 
-                                series: [{
-                                        name: 'Income',
-                                        type: 'line',
-                                        smooth: true,
-                                        symbol: 'circle',
-                                        symbolSize: 8,
-                                        data: @json($subscriberData)
-                                    },
-                                    {
-                                        name: 'Expense',
-                                        type: 'line',
-                                        smooth: true,
-                                        symbol: 'circle',
-                                        symbolSize: 8,
-                                        data: @json($contactData)
-                                    }
-                                ]
+                                series: @json($chartSeries)
+
                             });
                         }
 
@@ -377,127 +400,6 @@
                     EchartsLinesMultipleLight.init();
                 });
             </script>
-
-
-            {{-- <script>
-                var EchartsLinesMultipleLight = function() {
-                    var _linesMultipleLightExample = function() {
-                        if (typeof echarts == 'undefined') {
-                            console.warn('Warning - echarts.min.js is not loaded.');
-                            return;
-                        }
-                        var line_multiple_element = document.getElementById('line_multiple');
-            
-                        if (line_multiple_element) {
-                            var line_multiple = echarts.init(line_multiple_element, null, {
-                                renderer: 'svg'
-                            });
-            
-                            line_multiple.setOption({
-                                color: ['#03A9F4'], // Only one color since we have one dataset
-            
-                                textStyle: {
-                                    fontFamily: 'var(--body-font-family)',
-                                    color: 'var(--body-color)',
-                                    fontSize: 14,
-                                    lineHeight: 22,
-                                    textBorderColor: 'transparent'
-                                },
-            
-                                animationDuration: 750,
-            
-                                grid: {
-                                    left: 10,
-                                    right: 20,
-                                    top: 40,
-                                    bottom: 40,
-                                    containLabel: true
-                                },
-            
-                                title: {
-                                    left: 'center',
-                                    text: 'Payment Collection',
-                                    textStyle: {
-                                        fontSize: 15,
-                                        fontWeight: 500,
-                                        color: 'var(--body-color)'
-                                    }
-                                },
-            
-                                tooltip: {
-                                    trigger: 'axis',
-                                    className: 'shadow-sm rounded',
-                                    backgroundColor: 'var(--white)',
-                                    borderColor: 'var(--gray-400)',
-                                    padding: 15,
-                                    textStyle: {
-                                        color: '#000'
-                                    },
-                                    formatter: function(a) {
-                                        return (
-                                            a[0]['axisValueLabel'] +
-                                            "<div class='d-flex align-items-center'>" +
-                                            '<span class="p-1 rounded-pill me-2" style="background-color: ' +
-                                            a[0]['color'] + '"></span>' +
-                                            a[0]['seriesName'] + ': ' + a[0]['value'] +
-                                            "</div>"
-                                        );
-                                    }
-                                },
-            
-                                xAxis: {
-                                    type: 'category',
-                                    boundaryGap: false,
-                                    data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-                                },
-            
-                                yAxis: {
-                                    type: 'value'
-                                },
-            
-                                series: [
-                                    {
-                                        name: 'Collected Payment',
-                                        type: 'line',
-                                        smooth: true,
-                                        symbol: 'circle',
-                                        symbolSize: 8,
-                                        data: @json($subscriberData) // Only using Payment Collection data
-                                    }
-                                ]
-                            });
-                        }
-            
-                        var triggerChartResize = function() {
-                            line_multiple_element && line_multiple.resize();
-                        };
-            
-                        var sidebarToggle = document.querySelectorAll('.sidebar-control');
-                        if (sidebarToggle) {
-                            sidebarToggle.forEach(function(toggler) {
-                                toggler.addEventListener('click', triggerChartResize);
-                            });
-                        }
-            
-                        window.addEventListener('resize', function() {
-                            clearTimeout(resizeCharts);
-                            resizeCharts = setTimeout(function() {
-                                triggerChartResize();
-                            }, 200);
-                        });
-                    };
-            
-                    return {
-                        init: function() {
-                            _linesMultipleLightExample();
-                        }
-                    }
-                }();
-            
-                document.addEventListener('DOMContentLoaded', function() {
-                    EchartsLinesMultipleLight.init();
-                });
-            </script> --}}
 
             <script src="{{ asset('assets/js/jquery/jquery.min.js') }}"></script>
             <script>
